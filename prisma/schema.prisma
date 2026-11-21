@@ -6,3 +6,170 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+enum OrgStatus {
+  ACTIVE
+  SUSPENDED
+  ARCHIVED
+}
+enum MemberRole {
+  ORG_OWNER
+  ORG_ADMIN
+  TEACHER
+  STUDENT
+  PARENT
+}
+enum MemberStatus {
+  INVITED
+  ACTIVE
+  SUSPENDED
+}
+enum VerificationType {
+  EMAIL_VERIFY
+  PASSWORD_RESET
+}
+enum FilePurpose {
+  COURSE_COVER
+  LESSON_VIDEO
+  LESSON_PDF
+  LESSON_IMAGE
+  SUBMISSION_FILE
+  CERTIFICATE_PDF
+  ORG_LOGO
+  AVATAR
+}
+
+model User {
+  id              String     @id @default(uuid()) @db.Uuid
+  email           String     @unique
+  passwordHash    String
+  name            String
+  locale          String     @default("en")
+  emailVerifiedAt DateTime?
+  totpSecret      String?
+  totpEnabled     Boolean    @default(false)
+  status          UserStatus @default(ACTIVE)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  sessions           Session[]
+  verificationTokens VerificationToken[]
+  memberships        Membership[]
+  auditLogs          AuditLog[]
+  files              File[]             @relation("FileUploadedBy")
+  @@index([status])
+}
+
+model Session {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @db.Uuid
+  tokenHash String    @unique
+  userAgent String?
+  ip        String?
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model VerificationToken {
+  id        String           @id @default(uuid()) @db.Uuid
+  userId    String           @db.Uuid
+  type      VerificationType
+  tokenHash String           @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime         @default(now())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId, type])
+  @@index([expiresAt])
+}
+
+model Organization {
+  id            String    @id @default(uuid()) @db.Uuid
+  name          String
+  slug          String    @unique
+  description   String?
+  logoFileId    String?   @db.Uuid
+  defaultLocale String    @default("en")
+  status        OrgStatus @default(ACTIVE)
+  settings      Json      @default("{}")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  memberships Membership[]
+  invitations Invitation[]
+  auditLogs   AuditLog[]
+  files       File[]
+  @@index([status])
+}
+
+model Membership {
+  id             String       @id @default(uuid()) @db.Uuid
+  userId         String       @db.Uuid
+  organizationId String       @db.Uuid
+  role           MemberRole
+  status         MemberStatus @default(INVITED)
+  invitedById    String?      @db.Uuid
+  joinedAt       DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  @@unique([userId, organizationId])
+  @@index([organizationId, role])
+  @@index([organizationId, status])
+}
+
+model Invitation {
+  id             String       @id @default(uuid()) @db.Uuid
+  organizationId String       @db.Uuid
+  email          String
+  role           MemberRole
+  tokenHash      String       @unique
+  invitedById    String       @db.Uuid
+  expiresAt      DateTime
+  acceptedAt     DateTime?
+  createdAt      DateTime     @default(now())
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  @@index([organizationId, email])
+  @@index([expiresAt])
+}
+
+model AuditLog {
+  id             String   @id @default(uuid()) @db.Uuid
+  actorId        String?  @db.Uuid
+  organizationId String?  @db.Uuid
+  action         String
+  targetType     String?
+  targetId       String?
+  metadata       Json     @default("{}")
+  ip             String?
+  userAgent      String?
+  createdAt      DateTime @default(now())
+  actor        User?         @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  organization Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  @@index([organizationId, createdAt(sort: Desc)])
+  @@index([actorId, createdAt(sort: Desc)])
+  @@index([action])
+}
+
+model File {
+  id             String      @id @default(uuid()) @db.Uuid
+  organizationId String      @db.Uuid
+  uploadedById   String      @db.Uuid
+  storageKey     String      @unique
+  sizeBytes      BigInt
+  mimeType       String
+  originalName   String
+  checksum       String?
+  purpose        FilePurpose
+  createdAt      DateTime    @default(now())
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  uploadedBy   User         @relation("FileUploadedBy", fields: [uploadedById], references: [id], onDelete: Restrict)
+  @@index([organizationId, purpose])
+}

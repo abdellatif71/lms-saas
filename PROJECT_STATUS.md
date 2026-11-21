@@ -22,6 +22,10 @@ Last updated: Phase 0 — initial.
 - T0.1 — Repository scaffold (Next.js, TS, Tailwind 3, ESLint 9, Prisma 7
   with @prisma/adapter-pg). Prisma 7 datasource URL in prisma.config.ts.
   Versions pinned. Build/typecheck/lint/test green.
+- T1.1 — Prisma schema v1 (8 entities), docker compose (Postgres 5434,
+     Redis 6379, pgsty/silo 9000/9001), tenantPrisma extension, AppError
+     hierarchy, permissions helpers, tenant-isolation tests, init migration
+     applied.
 
 ## In progress
 - None.
@@ -44,5 +48,5 @@ Last updated: Phase 0 — initial.
 - D008 Modular monolith; API routes contain no business logic.
 
 ## Next implementation task
-T1.1 — Prisma schema v1 (User, Session, VerificationToken, Organization,
-Membership, Invitation, AuditLog, File) + tenantPrisma extension + error model.
+T1.2 — Auth.js v5 integration: credentials provider, argon2id hashing,
+session management, email verification, password reset flows (API + minimal UI).

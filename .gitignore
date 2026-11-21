@@ -20,3 +20,6 @@ prisma/*.db-journal
 
 # TypeScript incremental build output
 *.tsbuildinfo
+
+# Prisma generated client (rebuilt via `pnpm prisma generate`)
+/src/generated/

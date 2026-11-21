@@ -136,3 +136,11 @@ Assignment 1─* Submission *─1 User
 Organization 1─1 Subscription *─1 Plan
 Organization 1─* Invoice
 Organization 1─* AiDraft / AiUsageLog / File / Certificate
+
+## Prisma 7 Notes
+- `url` is NO LONGER in `schema.prisma` (Prisma 7 breaking change). URLs live
+  in `prisma.config.ts`.
+- Generated client under `src/generated/prisma/`, NOT committed.
+- Local dev via Docker: Postgres 16 on host :5434, Redis 7 on :6379,
+  MinIO API :9000, console :9001.
+- Migrations are the source of truth; `db push` is forbidden.
