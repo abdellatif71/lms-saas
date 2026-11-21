@@ -35,5 +35,44 @@
       "passwordReset": "تمت إعادة تعيين كلمة المرور بنجاح.",
       "loggedOutAll": "تم إلغاء جميع الجلسات."
     }
+  },
+  "org": {
+    "title": "المؤسسات",
+    "newOrg": "مؤسسة جديدة",
+    "name": "الاسم",
+    "slug": "المعرّف",
+    "description": "الوصف",
+    "defaultLocale": "اللغة الافتراضية",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "cancel": "إلغاء",
+    "members": "الأعضاء",
+    "inviteMember": "دعوة عضو",
+    "memberEmail": "البريد الإلكتروني",
+    "memberRole": "الدور",
+    "roleOwner": "المالك",
+    "roleAdmin": "المشرف",
+    "roleTeacher": "المعلّم",
+    "roleStudent": "الطالب",
+    "roleParent": "ولي الأمر",
+    "removeMember": "إزالة",
+    "suspendMember": "تعليق",
+    "changeRole": "تغيير الدور",
+    "invitationSent": "تم إرسال الدعوة.",
+    "invitationAccepted": "تم قبول الدعوة.",
+    "joinedAt": "تاريخ الانضمام",
+    "statusActive": "نشط",
+    "statusSuspended": "معلّق",
+    "errors": {
+      "notOwner": "دور مالك المؤسسة مطلوب.",
+      "notAdmin": "دور المسؤول مطلوب.",
+      "cannotChangeOwner": "لا يمكن تغيير دور المالك.",
+      "cannotRemoveOwner": "لا يمكن إزالة المالك.",
+      "alreadyMember": "هذا المستخدم عضو بالفعل.",
+      "invalidSlug": "معرّف المؤسسة غير صالح.",
+      "emailInvalid": "أدخل عنوان بريد إلكتروني صالحًا.",
+      "generic": "حدث خطأ ما.",
+      "crossTenant": "تم رفض الوصول بين المؤسسات."
+    }
   }
 }

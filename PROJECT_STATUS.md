@@ -30,6 +30,10 @@ Last updated: Phase 0 — initial.
   verification, password reset, Redis rate limiting, Console email
   provider, 5 UI pages (ar/fr/en, RTL), auth service + validation
   + integration tests.
+- T1.3 — Organizations (create/update/list), memberships (invite/accept/
+  role/suspend/remove), invitations (token-based, single-use), 9 API routes,
+  minimal admin UI (4 pages, ar/fr/en, RTL), extended permissions
+  (assertOrgOwner/assertOrgAdmin), cross-org isolation tests.
 
 ## In progress
 - None.
@@ -52,4 +56,5 @@ Last updated: Phase 0 — initial.
 - D008 Modular monolith; API routes contain no business logic.
 
 ## Next implementation task
-T1.3 — Organizations + memberships CRUD + invitations (service layer + minimal admin UI + tests).
+T1.4 — Audit logging middleware + minimal audit log viewer
+(SUPER_ADMIN only) + tenant-isolation release gate.

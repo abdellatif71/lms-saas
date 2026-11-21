@@ -35,5 +35,44 @@
       "passwordReset": "Your password was reset successfully.",
       "loggedOutAll": "All sessions were revoked."
     }
+  },
+  "org": {
+    "title": "Organizations",
+    "newOrg": "New organization",
+    "name": "Name",
+    "slug": "Slug",
+    "description": "Description",
+    "defaultLocale": "Default locale",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "members": "Members",
+    "inviteMember": "Invite member",
+    "memberEmail": "Email",
+    "memberRole": "Role",
+    "roleOwner": "Owner",
+    "roleAdmin": "Administrator",
+    "roleTeacher": "Teacher",
+    "roleStudent": "Student",
+    "roleParent": "Parent",
+    "removeMember": "Remove",
+    "suspendMember": "Suspend",
+    "changeRole": "Change role",
+    "invitationSent": "Invitation sent.",
+    "invitationAccepted": "Invitation accepted.",
+    "joinedAt": "Joined",
+    "statusActive": "Active",
+    "statusSuspended": "Suspended",
+    "errors": {
+      "notOwner": "Organization owner role required.",
+      "notAdmin": "Administrator role required.",
+      "cannotChangeOwner": "The owner's role cannot be changed.",
+      "cannotRemoveOwner": "The owner cannot be removed.",
+      "alreadyMember": "This user is already a member.",
+      "invalidSlug": "The organization slug is invalid.",
+      "emailInvalid": "Enter a valid email address.",
+      "generic": "Something went wrong.",
+      "crossTenant": "Cross-organization access is denied."
+    }
   }
 }

@@ -35,5 +35,44 @@
       "passwordReset": "Votre mot de passe a été réinitialisé avec succès.",
       "loggedOutAll": "Toutes les sessions ont été révoquées."
     }
+  },
+  "org": {
+    "title": "Organisations",
+    "newOrg": "Nouvelle organisation",
+    "name": "Nom",
+    "slug": "Identifiant",
+    "description": "Description",
+    "defaultLocale": "Langue par défaut",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "cancel": "Annuler",
+    "members": "Membres",
+    "inviteMember": "Inviter un membre",
+    "memberEmail": "E-mail",
+    "memberRole": "Rôle",
+    "roleOwner": "Propriétaire",
+    "roleAdmin": "Administrateur",
+    "roleTeacher": "Enseignant",
+    "roleStudent": "Étudiant",
+    "roleParent": "Parent",
+    "removeMember": "Retirer",
+    "suspendMember": "Suspendre",
+    "changeRole": "Modifier le rôle",
+    "invitationSent": "Invitation envoyée.",
+    "invitationAccepted": "Invitation acceptée.",
+    "joinedAt": "Adhésion",
+    "statusActive": "Actif",
+    "statusSuspended": "Suspendu",
+    "errors": {
+      "notOwner": "Le rôle de propriétaire de l'organisation est requis.",
+      "notAdmin": "Le rôle d'administrateur est requis.",
+      "cannotChangeOwner": "Le rôle du propriétaire ne peut pas être modifié.",
+      "cannotRemoveOwner": "Le propriétaire ne peut pas être retiré.",
+      "alreadyMember": "Cet utilisateur est déjà membre.",
+      "invalidSlug": "L'identifiant de l'organisation est invalide.",
+      "emailInvalid": "Saisissez une adresse e-mail valide.",
+      "generic": "Une erreur est survenue.",
+      "crossTenant": "L'accès inter-organisations est refusé."
+    }
   }
 }

@@ -19,6 +19,16 @@ export function isTeacherOrAbove(role: MemberRole): boolean {
 export function assertAdmin(ctx: AuthContext): void {
   if (!isAdmin(ctx.role)) throw new ForbiddenError("Admin role required");
 }
+export function assertOrgOwner(ctx: AuthContext): void {
+  if (ctx.role !== MemberRole.ORG_OWNER) {
+    throw new ForbiddenError("Organization owner role required");
+  }
+}
+export function assertOrgAdmin(ctx: AuthContext): void {
+  if (!isAdmin(ctx.role)) {
+    throw new ForbiddenError("Admin role required");
+  }
+}
 export function assertTeacherOrAbove(ctx: AuthContext): void {
   if (!isTeacherOrAbove(ctx.role)) throw new ForbiddenError("Teacher role or above required");
 }
