@@ -67,6 +67,16 @@ enum LessonCompletionRule {
   MANUAL
   TIME_BASED
 }
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  DROPPED
+}
+enum LessonProgressState {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
 
 model User {
   id              String     @id @default(uuid()) @db.Uuid
@@ -87,6 +97,8 @@ model User {
   auditLogs          AuditLog[]
   files              File[]             @relation("FileUploadedBy")
   authoredCourses    Course[]           @relation("CourseAuthor")
+  enrollments        Enrollment[]       @relation("StudentEnrollments")
+  lessonProgress     LessonProgress[]   @relation("StudentLessonProgress")
   @@index([status])
 }
 
@@ -134,6 +146,8 @@ model Organization {
   files       File[]
   courses     Course[]
   categories  Category[]
+  enrollments Enrollment[]
+  lessonProgress LessonProgress[]
   @@index([status])
 }
 
@@ -240,6 +254,7 @@ model Course {
   author       User         @relation("CourseAuthor", fields: [authorId], references: [id], onDelete: Restrict)
   category     Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   modules      Module[]
+  enrollments  Enrollment[]
 }
 
 model Module {
@@ -273,7 +288,48 @@ model Lesson {
 
   module Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   file   File?  @relation(fields: [fileId], references: [id], onDelete: SetNull)
+  progress LessonProgress[]
 
   @@index([moduleId, position])
   @@index([moduleId, deletedAt])
+}
+
+model Enrollment {
+  id             String           @id @default(uuid()) @db.Uuid
+  courseId       String           @db.Uuid
+  studentUserId  String           @db.Uuid
+  organizationId String           @db.Uuid
+  status         EnrollmentStatus @default(ACTIVE)
+  enrolledAt     DateTime         @default(now())
+  completedAt    DateTime?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  course      Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  studentUser User   @relation("StudentEnrollments", fields: [studentUserId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, studentUserId])
+  @@index([organizationId, studentUserId])
+  @@index([courseId, status])
+}
+
+model LessonProgress {
+  id                  String              @id @default(uuid()) @db.Uuid
+  lessonId            String              @db.Uuid
+  studentUserId       String              @db.Uuid
+  organizationId      String              @db.Uuid
+  state               LessonProgressState @default(NOT_STARTED)
+  lastPositionSeconds Int                 @default(0)
+  completedAt         DateTime?
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  lesson       Lesson       @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  studentUser  User         @relation("StudentLessonProgress", fields: [studentUserId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([lessonId, studentUserId])
+  @@index([organizationId, studentUserId])
+  @@index([studentUserId, state])
 }

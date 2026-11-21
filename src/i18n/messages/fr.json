@@ -181,5 +181,29 @@
     "retry": "Réessayer",
     "coverImage": "Téléverser la couverture",
     "lessonFile": "Fichier de la leçon"
+  },
+  "enrollment": {
+    "myCourses": "Mes cours",
+    "availableCourses": "Cours disponibles",
+    "enroll": "S'inscrire",
+    "enrolling": "Inscription...",
+    "enrolled": "Inscrit",
+    "leave": "Quitter",
+    "leaving": "Départ...",
+    "leaveBlocked": "Progression existante — impossible de quitter",
+    "alreadyEnrolled": "Déjà inscrit",
+    "notEnrolled": "Vous n'êtes pas inscrit à ce cours",
+    "noEnrollments": "Vous n'êtes inscrit à aucun cours",
+    "noAvailable": "Aucun cours disponible",
+    "browseCourses": "Voir les cours",
+    "courseContent": "Contenu du cours",
+    "markComplete": "Marquer comme terminé",
+    "back": "Retour",
+    "errors": {
+      "notStudent": "Seuls les étudiants peuvent s'inscrire",
+      "notOpen": "Le cours n'est pas ouvert aux inscriptions",
+      "notPublished": "Le cours n'est pas publié",
+      "cannotLeave": "Impossible de quitter un cours avec une progression"
+    }
   }
 }

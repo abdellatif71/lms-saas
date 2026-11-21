@@ -51,6 +51,10 @@ Last updated: Phase 0 — initial.
   MinIO/Silo private bucket, auto-bucket-creation, MIME magic-byte validation,
   size limits per purpose, FileUploader client component, 4 API routes,
   cross-org isolation tests. Course-content uploads only (avatars deferred).
+- T2.4 — Schema extension (Enrollment, LessonProgress + enums), migration
+  add_enrollment, enrollment service (STUDENT, OPEN-only, idempotent,
+  progress-blocked unenroll), student views (my-courses, available, learn),
+  5 API routes, cross-org isolation tests. Completion tracking deferred to T2.5.
 
 ## In progress
 - None.
@@ -73,5 +77,5 @@ Last updated: Phase 0 — initial.
 - D008 Modular monolith; API routes contain no business logic.
 
 ## Next implementation task
-T2.4 — Teacher course builder UI polish + enrollment (open enrollment:
-students join published courses; enrollment record; minimal student course view).
+T2.5 — Lesson completion tracking (LearningEvent heartbeats,
+LearningTimeBucket aggregation, real progress indicators).

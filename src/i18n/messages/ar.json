@@ -181,5 +181,29 @@
     "retry": "إعادة المحاولة",
     "coverImage": "رفع صورة الغلاف",
     "lessonFile": "ملف الدرس"
+  },
+  "enrollment": {
+    "myCourses": "دوراتي",
+    "availableCourses": "الدورات المتاحة",
+    "enroll": "التسجيل",
+    "enrolling": "جارٍ التسجيل...",
+    "enrolled": "مسجل",
+    "leave": "مغادرة",
+    "leaving": "جارٍ المغادرة...",
+    "leaveBlocked": "يوجد تقدم — لا يمكن المغادرة",
+    "alreadyEnrolled": "مسجل بالفعل",
+    "notEnrolled": "أنت غير مسجل في هذه الدورة",
+    "noEnrollments": "أنت غير مسجل في أي دورة",
+    "noAvailable": "لا توجد دورات متاحة",
+    "browseCourses": "تصفح الدورات",
+    "courseContent": "محتوى الدورة",
+    "markComplete": "وضع علامة مكتمل",
+    "back": "رجوع",
+    "errors": {
+      "notStudent": "يمكن للطلاب فقط التسجيل",
+      "notOpen": "التسجيل في الدورة غير مفتوح",
+      "notPublished": "الدورة غير منشورة",
+      "cannotLeave": "لا يمكن مغادرة دورة يوجد بها تقدم"
+    }
   }
 }

@@ -169,5 +169,29 @@
       "contentRequired": "Content is required for this content type"
     }
   },
-  "file": { "upload":"Upload", "uploading":"Uploading...", "selectFile":"Select file", "uploadSuccess":"Upload complete", "uploadFailed":"Upload failed", "maxSize":"File is too large", "invalidType":"Invalid file type", "remove":"Remove", "retry":"Retry", "coverImage":"Upload cover", "lessonFile":"Lesson file" }
+  "file": { "upload":"Upload", "uploading":"Uploading...", "selectFile":"Select file", "uploadSuccess":"Upload complete", "uploadFailed":"Upload failed", "maxSize":"File is too large", "invalidType":"Invalid file type", "remove":"Remove", "retry":"Retry", "coverImage":"Upload cover", "lessonFile":"Lesson file" },
+  "enrollment": {
+    "myCourses": "My courses",
+    "availableCourses": "Available courses",
+    "enroll": "Enroll",
+    "enrolling": "Enrolling...",
+    "enrolled": "Enrolled",
+    "leave": "Leave",
+    "leaving": "Leaving...",
+    "leaveBlocked": "Progress exists — cannot leave",
+    "alreadyEnrolled": "Already enrolled",
+    "notEnrolled": "You are not enrolled in this course",
+    "noEnrollments": "You are not enrolled in any courses",
+    "noAvailable": "No available courses",
+    "browseCourses": "Browse courses",
+    "courseContent": "Course content",
+    "markComplete": "Mark complete",
+    "back": "Back",
+    "errors": {
+      "notStudent": "Only students can enroll",
+      "notOpen": "Course is not open for enrollment",
+      "notPublished": "Course is not published",
+      "cannotLeave": "Cannot leave a course with existing progress"
+    }
+  }
 }
