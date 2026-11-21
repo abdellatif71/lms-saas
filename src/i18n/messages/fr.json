@@ -168,5 +168,18 @@
       "reorderFailed": "Réorganisation impossible",
       "contentRequired": "Le contenu est requis pour ce type"
     }
+  },
+  "file": {
+    "upload": "Téléverser",
+    "uploading": "Téléversement...",
+    "selectFile": "Sélectionner un fichier",
+    "uploadSuccess": "Téléversement terminé",
+    "uploadFailed": "Échec du téléversement",
+    "maxSize": "Fichier trop volumineux",
+    "invalidType": "Type de fichier invalide",
+    "remove": "Retirer",
+    "retry": "Réessayer",
+    "coverImage": "Téléverser la couverture",
+    "lessonFile": "Fichier de la leçon"
   }
 }

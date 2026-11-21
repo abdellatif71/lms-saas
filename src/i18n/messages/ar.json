@@ -168,5 +168,18 @@
       "reorderFailed": "تعذر إعادة الترتيب",
       "contentRequired": "المحتوى مطلوب لهذا النوع"
     }
+  },
+  "file": {
+    "upload": "رفع",
+    "uploading": "جارٍ الرفع...",
+    "selectFile": "اختيار ملف",
+    "uploadSuccess": "اكتمل الرفع",
+    "uploadFailed": "فشل الرفع",
+    "maxSize": "الملف كبير جدًا",
+    "invalidType": "نوع الملف غير صالح",
+    "remove": "إزالة",
+    "retry": "إعادة المحاولة",
+    "coverImage": "رفع صورة الغلاف",
+    "lessonFile": "ملف الدرس"
   }
 }

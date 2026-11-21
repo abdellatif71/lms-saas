@@ -168,5 +168,6 @@
       "reorderFailed": "Reordering failed",
       "contentRequired": "Content is required for this content type"
     }
-  }
+  },
+  "file": { "upload":"Upload", "uploading":"Uploading...", "selectFile":"Select file", "uploadSuccess":"Upload complete", "uploadFailed":"Upload failed", "maxSize":"File is too large", "invalidType":"Invalid file type", "remove":"Remove", "retry":"Retry", "coverImage":"Upload cover", "lessonFile":"Lesson file" }
 }

@@ -3,6 +3,7 @@ import { requireSessionOrRedirect } from "@/lib/auth/session";
 import { requireOrgContext } from "@/lib/auth/context";
 import { getCourseBySlug } from "@/modules/courses/service";
 import CourseStatusActions from "./status-actions";
+import CourseCoverUploader from "./cover-uploader";
 
 export default async function CourseDetailPage({ params }: { params: Promise<{ locale: string; slug: string; courseSlug: string }> }) {
   const { locale, slug, courseSlug } = await params;
@@ -40,6 +41,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ l
           </>
         )}
       </div>
+      {admin && <div className="mt-4"><CourseCoverUploader orgSlug={slug} /></div>}
     </main>
   );
 }

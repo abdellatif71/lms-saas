@@ -47,6 +47,10 @@ Last updated: Phase 0 — initial.
   Lessons CRUD + reorder + move-between-modules + soft-delete, 6 API routes,
   course content editor UI (5 pages, ar/fr/en, RTL), cross-org isolation tests.
   Phase 3 complete.
+- T2.3 — File upload pipeline: signed PUT/GET URLs via @aws-sdk/client-s3,
+  MinIO/Silo private bucket, auto-bucket-creation, MIME magic-byte validation,
+  size limits per purpose, FileUploader client component, 4 API routes,
+  cross-org isolation tests. Course-content uploads only (avatars deferred).
 
 ## In progress
 - None.
@@ -69,5 +73,5 @@ Last updated: Phase 0 — initial.
 - D008 Modular monolith; API routes contain no business logic.
 
 ## Next implementation task
-T2.3 — File upload pipeline (signed PUT to MinIO/Silo, signed GET,
-MIME validation, size limits, private buckets).
+T2.4 — Teacher course builder UI polish + enrollment (open enrollment:
+students join published courses; enrollment record; minimal student course view).
