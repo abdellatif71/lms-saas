@@ -38,6 +38,10 @@ Last updated: Phase 0 — initial.
   (User.isSuperAdmin), minimal audit viewer + org management UI,
   promote-super-admin script, tenant-isolation release gate (full
   cross-org suite). Phase 1 complete.
+- T2.1 — Schema extension (Category, Course, enums), migration add_catalog,
+  Categories CRUD (slug unique per org), Courses CRUD + soft-delete +
+  status workflow, 8 API routes, teacher UI (5 pages, ar/fr/en, RTL),
+  cross-org isolation tests. Phase 2 complete.
 
 ## In progress
 - None.
@@ -60,4 +64,5 @@ Last updated: Phase 0 — initial.
 - D008 Modular monolith; API routes contain no business logic.
 
 ## Next implementation task
-Phase 2 — T2.1 Categories + Courses CRUD + publish flow.
+T2.2 — Modules + Lessons (hierarchy, text/video/pdf/external,
+positions, soft-delete).
