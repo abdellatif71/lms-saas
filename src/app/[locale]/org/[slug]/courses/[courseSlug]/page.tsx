@@ -10,6 +10,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ l
   const ctx = await requireOrgContext(slug);
   const course = await getCourseBySlug(ctx, courseSlug);
   const t = await getTranslations({ locale, namespace: "course" });
+  const lessonT = await getTranslations({ locale, namespace: "lesson" });
   const admin = ctx.role === "ORG_OWNER" || ctx.role === "ORG_ADMIN";
 
   return (
@@ -23,6 +24,12 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ l
         <span className="rounded border px-2 py-1">{course.status}</span>
         {admin && (
           <>
+            <a
+              className="rounded border px-2 py-1"
+              href={`/${locale}/org/${slug}/courses/${courseSlug}/modules`}
+            >
+              {lessonT("manageContent")}
+            </a>
             <a
               className="rounded border px-2 py-1"
               href={`/${locale}/org/${slug}/courses/${courseSlug}/edit`}

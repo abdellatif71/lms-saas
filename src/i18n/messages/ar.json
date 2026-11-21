@@ -127,5 +127,46 @@
       "invalidTransition": "انتقال حالة غير صالح",
       "categoryHasCourses": "الفئة تحتوي على دورات ولا يمكن حذفها"
     }
+  },
+  "lesson": {
+    "modules": "الوحدات",
+    "lessons": "الدروس",
+    "newModule": "وحدة جديدة",
+    "newLesson": "درس جديد",
+    "editModule": "تعديل الوحدة",
+    "editLesson": "تعديل الدرس",
+    "title": "العنوان",
+    "contentType": "نوع المحتوى",
+    "contentTypeText": "نص",
+    "contentTypeVideo": "فيديو",
+    "contentTypePdf": "PDF",
+    "contentTypeExternal": "خارجي",
+    "bodyText": "المحتوى النصي",
+    "externalUrl": "رابط خارجي",
+    "fileId": "معرّف الملف",
+    "estimatedMinutes": "الدقائق المقدرة",
+    "completionRule": "قاعدة الإكمال",
+    "ruleView": "عرض",
+    "ruleManual": "يدوي",
+    "ruleTimeBased": "حسب الوقت",
+    "position": "الموقع",
+    "moveUp": "تحريك لأعلى",
+    "moveDown": "تحريك لأسفل",
+    "delete": "حذف",
+    "deleteConfirm": "هل تريد حذف هذا العنصر؟",
+    "noModules": "لا توجد وحدات",
+    "noLessons": "لا توجد دروس",
+    "back": "رجوع",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "cancel": "إلغاء",
+    "manageContent": "إدارة المحتوى",
+    "errors": {
+      "notFound": "غير موجود",
+      "notAllowed": "غير مصرح",
+      "moduleHasLessons": "الوحدة تحتوي على دروس ولا يمكن حذفها",
+      "reorderFailed": "تعذر إعادة الترتيب",
+      "contentRequired": "المحتوى مطلوب لهذا النوع"
+    }
   }
 }

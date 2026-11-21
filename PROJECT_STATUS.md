@@ -42,6 +42,11 @@ Last updated: Phase 0 — initial.
   Categories CRUD (slug unique per org), Courses CRUD + soft-delete +
   status workflow, 8 API routes, teacher UI (5 pages, ar/fr/en, RTL),
   cross-org isolation tests. Phase 2 complete.
+- T2.2 — Schema extension (Module, Lesson, LessonContentType,
+  LessonCompletionRule), migration add_lessons, Modules CRUD + reorder,
+  Lessons CRUD + reorder + move-between-modules + soft-delete, 6 API routes,
+  course content editor UI (5 pages, ar/fr/en, RTL), cross-org isolation tests.
+  Phase 3 complete.
 
 ## In progress
 - None.
@@ -64,5 +69,5 @@ Last updated: Phase 0 — initial.
 - D008 Modular monolith; API routes contain no business logic.
 
 ## Next implementation task
-T2.2 — Modules + Lessons (hierarchy, text/video/pdf/external,
-positions, soft-delete).
+T2.3 — File upload pipeline (signed PUT to MinIO/Silo, signed GET,
+MIME validation, size limits, private buckets).

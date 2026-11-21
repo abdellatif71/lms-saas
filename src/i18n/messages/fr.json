@@ -127,5 +127,46 @@
       "invalidTransition": "Transition de statut invalide",
       "categoryHasCourses": "Cette catégorie contient des cours et ne peut pas être supprimée"
     }
+  },
+  "lesson": {
+    "modules": "Modules",
+    "lessons": "Leçons",
+    "newModule": "Nouveau module",
+    "newLesson": "Nouvelle leçon",
+    "editModule": "Modifier le module",
+    "editLesson": "Modifier la leçon",
+    "title": "Titre",
+    "contentType": "Type de contenu",
+    "contentTypeText": "Texte",
+    "contentTypeVideo": "Vidéo",
+    "contentTypePdf": "PDF",
+    "contentTypeExternal": "Externe",
+    "bodyText": "Contenu textuel",
+    "externalUrl": "URL externe",
+    "fileId": "Identifiant du fichier",
+    "estimatedMinutes": "Minutes estimées",
+    "completionRule": "Règle d'achèvement",
+    "ruleView": "Consultation",
+    "ruleManual": "Manuelle",
+    "ruleTimeBased": "Temps requis",
+    "position": "Position",
+    "moveUp": "Monter",
+    "moveDown": "Descendre",
+    "delete": "Supprimer",
+    "deleteConfirm": "Supprimer cet élément ?",
+    "noModules": "Aucun module",
+    "noLessons": "Aucune leçon",
+    "back": "Retour",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "cancel": "Annuler",
+    "manageContent": "Gérer le contenu",
+    "errors": {
+      "notFound": "Introuvable",
+      "notAllowed": "Non autorisé",
+      "moduleHasLessons": "Le module contient des leçons et ne peut pas être supprimé",
+      "reorderFailed": "Réorganisation impossible",
+      "contentRequired": "Le contenu est requis pour ce type"
+    }
   }
 }
