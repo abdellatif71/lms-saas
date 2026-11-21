@@ -5,6 +5,7 @@ import { MemberRole, MemberStatus } from "@/generated/prisma/enums";
 import { generateToken, hashToken } from "@/lib/auth/tokens";
 import { getEmailProvider } from "@/lib/email";
 import { logger } from "@/lib/logger";
+import { audit } from "@/lib/audit";
 
 const INVITE_TTL_HOURS = 72;
 
@@ -55,6 +56,7 @@ export async function inviteMember(ctx: AuthContext, input: { email: string; rol
     text: `Accept your invitation: token=${token}\n\nThis expires in ${INVITE_TTL_HOURS} hours.`,
   });
   logger.info({ invitationId: invitation.id }, "Invitation sent");
+  await audit({ actorId: ctx.userId, organizationId: ctx.organizationId, action: "MEMBER.INVITED", targetType: "Invitation", targetId: invitation.id, metadata: { role: input.role } });
   return { invitationId: invitation.id };
 }
 
@@ -87,7 +89,7 @@ export async function acceptInvitation(rawToken: string, userId: string) {
     where: { userId_organizationId: { userId, organizationId: invitation.organizationId } },
   });
 
-  return prisma.$transaction(async (tx) => {
+  const membership = await prisma.$transaction(async (tx) => {
     await tx.invitation.update({
       where: { id: invitation.id },
       data: { acceptedAt: new Date() },
@@ -109,6 +111,8 @@ export async function acceptInvitation(rawToken: string, userId: string) {
       },
     });
   });
+  await audit({ actorId: userId, organizationId: invitation.organizationId, action: "MEMBER.INVITATION_ACCEPTED", targetType: "Membership", targetId: membership.id, metadata: { role: invitation.role } });
+  return membership;
 }
 
 export async function changeMemberRole(ctx: AuthContext, membershipId: string, newRole: MemberRole) {
@@ -120,7 +124,9 @@ export async function changeMemberRole(ctx: AuthContext, membershipId: string, n
   if (!target) throw new NotFoundError("Member not found");
   assertSameOrg(ctx, target.organizationId);
   if (target.role === MemberRole.ORG_OWNER) throw new ForbiddenError("Cannot change the owner's role");
-  return prisma.membership.update({ where: { id: membershipId }, data: { role: newRole } });
+  const updated = await prisma.membership.update({ where: { id: membershipId }, data: { role: newRole } });
+  await audit({ actorId: ctx.userId, organizationId: ctx.organizationId, action: "MEMBER.ROLE_CHANGED", targetType: "Membership", targetId: membershipId, metadata: { oldRole: target.role, newRole } });
+  return updated;
 }
 
 export async function suspendMember(ctx: AuthContext, membershipId: string) {
@@ -135,7 +141,9 @@ export async function suspendMember(ctx: AuthContext, membershipId: string) {
   if (ctx.role !== MemberRole.ORG_OWNER && target.role === MemberRole.ORG_ADMIN) {
     throw new ForbiddenError("Only owner can suspend admins");
   }
-  return prisma.membership.update({ where: { id: membershipId }, data: { status: MemberStatus.SUSPENDED } });
+  const updated = await prisma.membership.update({ where: { id: membershipId }, data: { status: MemberStatus.SUSPENDED } });
+  await audit({ actorId: ctx.userId, organizationId: ctx.organizationId, action: "MEMBER.SUSPENDED", targetType: "Membership", targetId: membershipId, metadata: { role: target.role } });
+  return updated;
 }
 
 export async function removeMember(ctx: AuthContext, membershipId: string) {
@@ -147,5 +155,7 @@ export async function removeMember(ctx: AuthContext, membershipId: string) {
   assertSameOrg(ctx, target.organizationId);
   if (target.userId === ctx.userId) throw new ForbiddenError("Cannot remove yourself");
   if (target.role === MemberRole.ORG_OWNER) throw new ForbiddenError("Cannot remove the owner");
-  return prisma.membership.delete({ where: { id: membershipId } });
+  const removed = await prisma.membership.delete({ where: { id: membershipId } });
+  await audit({ actorId: ctx.userId, organizationId: ctx.organizationId, action: "MEMBER.REMOVED", targetType: "Membership", targetId: membershipId, metadata: { role: target.role } });
+  return removed;
 }

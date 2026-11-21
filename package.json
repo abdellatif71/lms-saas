@@ -19,7 +19,8 @@
     "format": "prettier --write .",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "promote-super-admin": "tsx scripts/promote-super-admin.ts"
   },
   "dependencies": {
     "@auth/core": "^0.41.3",
@@ -61,6 +62,7 @@
     "prisma": "7.10.1",
     "tailwindcss": "3.4.17",
     "tailwindcss-animate": "^1.0.7",
+    "tsx": "^4.23.15",
     "typescript": "6.0.2",
     "vitest": "^5.1.1"
   }

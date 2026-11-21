@@ -74,5 +74,16 @@
       "generic": "Une erreur est survenue.",
       "crossTenant": "L'accès inter-organisations est refusé."
     }
+  },
+  "admin": {
+    "auditLog": "Journal d'audit",
+    "organizations": "Organisations",
+    "suspend": "Suspendre",
+    "reactivate": "Réactiver",
+    "confirmSuspend": "Suspendre cette organisation ?",
+    "confirmReactivate": "Réactiver cette organisation ?",
+    "filters": { "organization": "Organisation", "action": "Action", "since": "Depuis", "until": "Jusqu'à" },
+    "columns": { "when": "Quand", "who": "Qui", "action": "Action", "org": "Organisation", "target": "Cible" },
+    "empty": "Aucune entrée d'audit"
   }
 }

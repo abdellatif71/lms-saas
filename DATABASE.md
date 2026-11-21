@@ -145,6 +145,15 @@ Organization 1─* AiDraft / AiUsageLog / File / Certificate
   MinIO API :9000, console :9001.
 - Migrations are the source of truth; `db push` is forbidden.
 
+## Migration history
+- `20261121125137_init`: initial schema.
+- `20261121160757_add_super_admin`: adds `User.isSuperAdmin`.
+
+Audit log retention: not implemented yet; Phase 9 concern.
+
+SUPER_ADMIN bootstrap: run `pnpm promote-super-admin <email>` after the first
+user registers.
+
 ## Auth API manual smoke test
 
 Start the app and Docker services, then use a unique email for each run.

@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db/client";
 import { ConflictError, NotFoundError } from "@/lib/errors";
 import { assertOrgOwner, assertSameOrg, type AuthContext } from "@/modules/auth/permissions";
 import { randomBytes } from "node:crypto";
+import { audit } from "@/lib/audit";
 
 const SLUG_RE = /^[a-z0-9](?:[a-z0-9-]{0,58}[a-z0-9])?$/;
 
@@ -48,6 +49,7 @@ export async function createOrganization(ownerId: string, input: CreateOrgInput)
       },
     },
   });
+  await audit({ actorId: ownerId, organizationId: org.id, action: "ORG.CREATED", targetType: "Organization", targetId: org.id, metadata: { slug: org.slug } });
   return { id: org.id, slug: org.slug };
 }
 
@@ -76,7 +78,7 @@ export async function updateOrganization(ctx: AuthContext, slug: string, input: 
   assertOrgOwner(ctx);
   const org = await getOrganizationBySlug(ctx, slug);
   assertSameOrg(ctx, org.id);
-  return prisma.organization.update({
+  const updated = await prisma.organization.update({
     where: { id: org.id },
     data: {
       ...(input.name !== undefined ? { name: input.name.trim() } : {}),
@@ -84,4 +86,6 @@ export async function updateOrganization(ctx: AuthContext, slug: string, input: 
       ...(input.defaultLocale !== undefined ? { defaultLocale: input.defaultLocale } : {}),
     },
   });
+  await audit({ actorId: ctx.userId, organizationId: org.id, action: "ORG.UPDATED", targetType: "Organization", targetId: org.id, metadata: { changedFields: Object.keys(input) } });
+  return updated;
 }

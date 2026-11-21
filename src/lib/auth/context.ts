@@ -8,6 +8,12 @@ export async function requireOrgContext(slug: string): Promise<AuthContext> {
   const session = await auth();
   if (!session?.user?.id) throw new UnauthorizedError();
 
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { isSuperAdmin: true, status: true },
+  });
+  if (!user || user.status !== "ACTIVE") throw new ForbiddenError("Organization not found or access denied");
+
   const org = await prisma.organization.findUnique({ where: { slug } });
   if (!org) throw new ForbiddenError("Organization not found or access denied");
 
@@ -28,5 +34,6 @@ export async function requireOrgContext(slug: string): Promise<AuthContext> {
     userId: session.user.id,
     organizationId: org.id,
     role: membership.role as MemberRole,
+    isSuperAdmin: user.isSuperAdmin,
   };
 }

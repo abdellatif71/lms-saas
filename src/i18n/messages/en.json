@@ -74,5 +74,16 @@
       "generic": "Something went wrong.",
       "crossTenant": "Cross-organization access is denied."
     }
+  },
+  "admin": {
+    "auditLog": "Audit log",
+    "organizations": "Organizations",
+    "suspend": "Suspend",
+    "reactivate": "Reactivate",
+    "confirmSuspend": "Suspend this organization?",
+    "confirmReactivate": "Reactivate this organization?",
+    "filters": { "organization": "Organization", "action": "Action", "since": "Since", "until": "Until" },
+    "columns": { "when": "When", "who": "Who", "action": "Action", "org": "Organization", "target": "Target" },
+    "empty": "No audit entries"
   }
 }

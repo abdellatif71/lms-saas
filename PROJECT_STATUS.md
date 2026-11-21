@@ -34,6 +34,10 @@ Last updated: Phase 0 — initial.
   role/suspend/remove), invitations (token-based, single-use), 9 API routes,
   minimal admin UI (4 pages, ar/fr/en, RTL), extended permissions
   (assertOrgOwner/assertOrgAdmin), cross-org isolation tests.
+- T1.4 — Audit logging (service-layer, append-only), SUPER_ADMIN role
+  (User.isSuperAdmin), minimal audit viewer + org management UI,
+  promote-super-admin script, tenant-isolation release gate (full
+  cross-org suite). Phase 1 complete.
 
 ## In progress
 - None.
@@ -56,5 +60,4 @@ Last updated: Phase 0 — initial.
 - D008 Modular monolith; API routes contain no business logic.
 
 ## Next implementation task
-T1.4 — Audit logging middleware + minimal audit log viewer
-(SUPER_ADMIN only) + tenant-isolation release gate.
+Phase 2 — T2.1 Categories + Courses CRUD + publish flow.

@@ -5,6 +5,7 @@ export type AuthContext = {
   userId: string;
   organizationId: string;
   role: MemberRole;
+  isSuperAdmin?: boolean;
 };
 
 const ADMIN_ROLES: MemberRole[] = [MemberRole.ORG_OWNER, MemberRole.ORG_ADMIN];

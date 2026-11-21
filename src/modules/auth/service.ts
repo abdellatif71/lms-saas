@@ -4,6 +4,7 @@ import { hashPassword } from "@/lib/auth/password";
 import { generateToken, hashToken } from "@/lib/auth/tokens";
 import { ConflictError, NotFoundError, ValidationError } from "@/lib/errors";
 import { logger } from "@/lib/logger";
+import { audit } from "@/lib/audit";
 
 const EMAIL_VERIFY_TTL_HOURS = 24;
 const PASSWORD_RESET_TTL_HOURS = 1;
@@ -34,6 +35,8 @@ export async function registerUser(input: {
     text: `Your verification token: ${token}\n\nThis token expires in ${EMAIL_VERIFY_TTL_HOURS} hours.`,
   });
 
+  await audit({ actorId: user.id, action: "USER.REGISTERED", targetType: "User", targetId: user.id });
+
   logger.info({ userId: user.id }, "User registered, verification email queued");
   return { userId: user.id };
 }
@@ -55,6 +58,8 @@ export async function verifyEmail(rawToken: string): Promise<void> {
       data: { emailVerifiedAt: new Date() },
     }),
   ]);
+
+  await audit({ actorId: record.userId, action: "USER.EMAIL_VERIFIED", targetType: "User", targetId: record.userId });
 }
 
 export async function requestPasswordReset(email: string): Promise<void> {
@@ -72,6 +77,8 @@ export async function requestPasswordReset(email: string): Promise<void> {
     subject: "Reset your password",
     text: `Your reset token: ${token}\n\nThis token expires in ${PASSWORD_RESET_TTL_HOURS} hour(s).`,
   });
+
+  await audit({ actorId: user.id, action: "USER.PASSWORD_RESET_REQUESTED", targetType: "User", targetId: user.id });
 }
 
 export async function resetPassword(rawToken: string, newPassword: string): Promise<void> {
@@ -96,4 +103,6 @@ export async function resetPassword(rawToken: string, newPassword: string): Prom
       data: { revokedAt: new Date() },
     }),
   ]);
+
+  await audit({ actorId: record.userId, action: "USER.PASSWORD_RESET", targetType: "User", targetId: record.userId });
 }

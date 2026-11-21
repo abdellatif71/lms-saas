@@ -74,5 +74,16 @@
       "generic": "حدث خطأ ما.",
       "crossTenant": "تم رفض الوصول بين المؤسسات."
     }
+  },
+  "admin": {
+    "auditLog": "سجل التدقيق",
+    "organizations": "المؤسسات",
+    "suspend": "تعليق",
+    "reactivate": "إعادة التفعيل",
+    "confirmSuspend": "هل تريد تعليق هذه المؤسسة؟",
+    "confirmReactivate": "هل تريد إعادة تفعيل هذه المؤسسة؟",
+    "filters": { "organization": "المؤسسة", "action": "الإجراء", "since": "من", "until": "إلى" },
+    "columns": { "when": "متى", "who": "من", "action": "الإجراء", "org": "المؤسسة", "target": "الهدف" },
+    "empty": "لا توجد إدخالات تدقيق"
   }
 }
