@@ -18,9 +18,13 @@ Last updated: Phase 0 — initial.
 
 ## Completed
 - Phase 0 documentation drafted.
+- T0.0 — Documentation baseline (validated).
+- T0.1 — Repository scaffold (Next.js, TS, Tailwind 3, ESLint 9, Prisma 7
+  with @prisma/adapter-pg). Prisma 7 datasource URL in prisma.config.ts.
+  Versions pinned. Build/typecheck/lint/test green.
 
 ## In progress
-- T0.0 — Documentation files being written (this task).
+- None.
 
 ## Outstanding issues
 - None yet.
@@ -40,4 +44,5 @@ Last updated: Phase 0 — initial.
 - D008 Modular monolith; API routes contain no business logic.
 
 ## Next implementation task
-T0.1 — Repository scaffolding (Next.js, TypeScript, Tailwind, tooling).
+T1.1 — Prisma schema v1 (User, Session, VerificationToken, Organization,
+Membership, Invitation, AuditLog, File) + tenantPrisma extension + error model.

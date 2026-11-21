@@ -17,3 +17,6 @@ Thumbs.db
 !.vscode/extensions.json
 prisma/*.db
 prisma/*.db-journal
+
+# TypeScript incremental build output
+*.tsbuildinfo
