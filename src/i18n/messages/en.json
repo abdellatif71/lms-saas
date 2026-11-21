@@ -2,5 +2,38 @@
   "common": {
     "appName": "LMS SaaS",
     "scaffoldingOk": "Scaffolding OK"
+  },
+  "auth": {
+    "title": "Authentication",
+    "login": "Sign in",
+    "register": "Create account",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "submit": "Continue",
+    "submitting": "Please wait...",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "verifyEmail": "Verify email",
+    "forgotPassword": "Forgot password?",
+    "resetPassword": "Reset password",
+    "checkEmail": "Check your email",
+    "registrationPending": "Your account was created. Check your email for the verification token.",
+    "errors": {
+      "invalidCredentials": "Invalid email or password, or email is not verified.",
+      "emailTaken": "This email is already registered.",
+      "tokenInvalid": "The token is invalid.",
+      "tokenExpired": "The token has expired.",
+      "rateLimited": "Too many requests. Please try again later.",
+      "passwordMismatch": "Passwords do not match.",
+      "generic": "Something went wrong."
+    },
+    "success": {
+      "registered": "Account created successfully.",
+      "emailVerified": "Your email was verified successfully.",
+      "resetEmailSent": "If the account exists, a reset token was sent.",
+      "passwordReset": "Your password was reset successfully.",
+      "loggedOutAll": "All sessions were revoked."
+    }
   }
 }

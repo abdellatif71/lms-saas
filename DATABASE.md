@@ -144,3 +144,40 @@ Organization 1─* AiDraft / AiUsageLog / File / Certificate
 - Local dev via Docker: Postgres 16 on host :5434, Redis 7 on :6379,
   MinIO API :9000, console :9001.
 - Migrations are the source of truth; `db push` is forbidden.
+
+## Auth API manual smoke test
+
+Start the app and Docker services, then use a unique email for each run.
+
+```bash
+# Register; the response contains the user ID. The verification token is printed by
+# ConsoleEmailProvider in the application stdout.
+curl -i -X POST http://localhost:3000/api/auth/register \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"smoke@example.test","password":"password-123","name":"Smoke User"}'
+
+# Verify the email with the token logged on stdout.
+curl -i -X POST http://localhost:3000/api/auth/verify-email \
+  -H 'Content-Type: application/json' \
+  -d '{"token":"<EMAIL_VERIFY_TOKEN>"}'
+
+# Login is performed through Auth.js on the frontend:
+# Open /en/login, /fr/login, or /ar/login and submit the credentials.
+# This invokes Auth.js POST /api/auth/callback/credentials with redirect:false.
+
+# Request a password reset; response is intentionally indistinguishable for
+# existing and unknown email addresses. Existing-user tokens are logged by
+# ConsoleEmailProvider in the application stdout.
+curl -i -X POST http://localhost:3000/api/auth/forgot-password \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"smoke@example.test"}'
+
+# Reset the password with the token logged on stdout.
+curl -i -X POST http://localhost:3000/api/auth/reset-password \
+  -H 'Content-Type: application/json' \
+  -d '{"token":"<PASSWORD_RESET_TOKEN>","newPassword":"new-password-123"}'
+```
+
+`ConsoleEmailProvider` logs verification and reset tokens to stdout for development;
+it does not send external email. Replace `getEmailProvider()` with an SMTP/Resend/
+Mailpit implementation without changing the auth service interface.

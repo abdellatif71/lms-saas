@@ -2,5 +2,38 @@
   "common": {
     "appName": "LMS SaaS",
     "scaffoldingOk": "Échafaudage OK"
+  },
+  "auth": {
+    "title": "Authentification",
+    "login": "Se connecter",
+    "register": "Créer un compte",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "name": "Nom",
+    "submit": "Continuer",
+    "submitting": "Veuillez patienter...",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "verifyEmail": "Vérifier l'e-mail",
+    "forgotPassword": "Mot de passe oublié ?",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "checkEmail": "Consultez vos e-mails",
+    "registrationPending": "Votre compte a été créé. Consultez vos e-mails pour obtenir le jeton de vérification.",
+    "errors": {
+      "invalidCredentials": "E-mail ou mot de passe invalide, ou e-mail non vérifié.",
+      "emailTaken": "Cet e-mail est déjà enregistré.",
+      "tokenInvalid": "Le jeton est invalide.",
+      "tokenExpired": "Le jeton a expiré.",
+      "rateLimited": "Trop de demandes. Veuillez réessayer plus tard.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "generic": "Une erreur est survenue."
+    },
+    "success": {
+      "registered": "Compte créé avec succès.",
+      "emailVerified": "Votre e-mail a été vérifié avec succès.",
+      "resetEmailSent": "Si le compte existe, un jeton de réinitialisation a été envoyé.",
+      "passwordReset": "Votre mot de passe a été réinitialisé avec succès.",
+      "loggedOutAll": "Toutes les sessions ont été révoquées."
+    }
   }
 }

@@ -26,6 +26,10 @@ Last updated: Phase 0 — initial.
      Redis 6379, pgsty/silo 9000/9001), tenantPrisma extension, AppError
      hierarchy, permissions helpers, tenant-isolation tests, init migration
      applied.
+- T1.2 — Auth.js v5 (credentials, argon2id, DB sessions), email
+  verification, password reset, Redis rate limiting, Console email
+  provider, 5 UI pages (ar/fr/en, RTL), auth service + validation
+  + integration tests.
 
 ## In progress
 - None.
@@ -48,5 +52,4 @@ Last updated: Phase 0 — initial.
 - D008 Modular monolith; API routes contain no business logic.
 
 ## Next implementation task
-T1.2 — Auth.js v5 integration: credentials provider, argon2id hashing,
-session management, email verification, password reset flows (API + minimal UI).
+T1.3 — Organizations + memberships CRUD + invitations (service layer + minimal admin UI + tests).
