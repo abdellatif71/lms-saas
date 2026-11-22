@@ -84,7 +84,17 @@ Last updated: Phase 0 — initial.
 - D009 Learning time from heartbeats only, aggregated to daily
   LearningTimeBucket. No wall-clock estimation. Anti-cheat: completion
   requires prior STARTED/HEARTBEAT event.
+- T3.1 — Learning experience UI refinement: CoursePlayer layout
+  (module/lesson tree, progress badges, active highlight, mobile drawer),
+  resume-position endpoint (first incomplete lesson by module/lesson position),
+  lesson viewer refactor with prev/next navigation, my-courses refinement
+  (progress bar, continue button, time spent, empty/loading/error states),
+  course completion page (100% check, certificate placeholder). No schema
+  change, no new migration. i18n ar/fr/en, RTL.
+- D010 Resume position = first incomplete lesson by (module.position,
+  lesson.position). Course completion page redirects to resume if < 100%.
 
 ## Next implementation task
-T3.1 — Learning experience UI refinement (resume position,
-lesson navigation, course player polish), before Phase 4 assessment work.
+T4.1 — Assessment foundation (Question, QuestionBank, Quiz models;
+question types: MCQ, true/false, short answer; teacher UI to create
+questions per lesson). Per master roadmap Phase 4.

@@ -221,5 +221,37 @@
       "notStarted": "Learning activity is required before completion",
       "alreadyCompleted": "Lesson is already completed"
     }
+  },
+  "learn": {
+    "coursePlayer": "Course player",
+    "lessons": "Lessons",
+    "modules": "Modules",
+    "completed": "Completed",
+    "inProgress": "In progress",
+    "notStarted": "Not started",
+    "previous": "Previous",
+    "next": "Next",
+    "markComplete": "Mark complete",
+    "completedToast": "Lesson completed",
+    "nextLesson": "Next lesson",
+    "courseCompleted": "Course completed",
+    "backToMyCourses": "Back to my courses",
+    "continueLearning": "Continue",
+    "xOfYLessons": "{completed} of {total} lessons completed",
+    "totalTimeSpent": "Total time spent",
+    "certificateComingSoon": "Certificate issuance is coming soon",
+    "resumeFrom": "Resume from",
+    "emptyMyCourses": "You are not enrolled in any course yet",
+    "browseCourses": "Browse courses",
+    "loading": "Loading",
+    "retry": "Retry",
+    "back": "Back",
+    "progress": "Progress",
+    "errors": {
+      "notEnrolled": "You are not enrolled in this course",
+      "courseNotFound": "Course not found",
+      "lessonNotFound": "Lesson not found",
+      "progressFetchFailed": "Could not load learning progress"
+    }
   }
 }

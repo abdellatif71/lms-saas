@@ -19,11 +19,15 @@ function formatTime(totalMs: number) {
 
 export function LessonViewer({
   slug,
-  courseSlug: _courseSlug,
+  courseSlug,
   lessons,
   markCompleteLabel,
   timeSpentLabel,
   completedLabel,
+  locale,
+  prev,
+  next,
+  onLastCompleteHref,
 }: {
   slug: string;
   courseSlug: string;
@@ -31,11 +35,16 @@ export function LessonViewer({
   markCompleteLabel: string;
   timeSpentLabel: string;
   completedLabel: string;
+  locale: string;
+  prev: { id: string; label: string } | null;
+  next: { id: string; label: string } | null;
+  onLastCompleteHref?: string | undefined;
 }) {
   const [selectedId, setSelectedId] = useState(lessons[0]?.id ?? "");
   const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [progress, setProgress] = useState<{ status: string; totalTimeMs: number } | null>(null);
   const [completing, setCompleting] = useState(false);
+  const [toast, setToast] = useState("");
   const selected = lessons.find((lesson) => lesson.id === selectedId) ?? lessons[0];
   useLessonHeartbeat(slug, selected?.id ?? "");
 
@@ -66,6 +75,12 @@ export function LessonViewer({
     setCompleting(false);
     if (response.ok) {
       setProgress((current) => current ? { ...current, status: "COMPLETED" } : { status: "COMPLETED", totalTimeMs: 0 });
+      setToast(completedLabel);
+      if (next) {
+        window.setTimeout(() => window.location.assign(`/${locale}/org/${slug}/courses/${courseSlug}/learn/${next.id}`), 600);
+      } else if (onLastCompleteHref) {
+        window.setTimeout(() => window.location.assign(onLastCompleteHref), 600);
+      }
     }
   }
 
@@ -97,6 +112,11 @@ export function LessonViewer({
             {progress?.status === "COMPLETED" ? completedLabel : markCompleteLabel}
           </button>
         </div>
+        <div className="mt-6 flex items-center justify-between gap-3">
+          {prev ? <a className="rounded border px-3 py-2 text-sm" href={`/${locale}/org/${slug}/courses/${courseSlug}/learn/${prev.id}`}>← {prev.label}</a> : <button disabled className="rounded border px-3 py-2 text-sm opacity-50">←</button>}
+          {next ? <a className="rounded bg-slate-900 px-3 py-2 text-sm text-white" href={`/${locale}/org/${slug}/courses/${courseSlug}/learn/${next.id}`}>{next.label} →</a> : <button disabled className="rounded border px-3 py-2 text-sm opacity-50">→</button>}
+        </div>
+        {toast && <div role="status" className="fixed bottom-4 start-4 z-50 rounded bg-emerald-700 px-4 py-3 text-sm text-white shadow">{toast}{next ? ` — ${next.label}` : ""}</div>}
       </article>
     </div>
   );

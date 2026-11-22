@@ -233,5 +233,37 @@
       "notStarted": "Une activité d'apprentissage est requise avant de terminer",
       "alreadyCompleted": "La leçon est déjà terminée"
     }
+  },
+  "learn": {
+    "coursePlayer": "Lecteur de cours",
+    "lessons": "Leçons",
+    "modules": "Modules",
+    "completed": "Terminé",
+    "inProgress": "En cours",
+    "notStarted": "Non commencé",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "markComplete": "Marquer comme terminé",
+    "completedToast": "Leçon terminée",
+    "nextLesson": "Leçon suivante",
+    "courseCompleted": "Cours terminé",
+    "backToMyCourses": "Retour à mes cours",
+    "continueLearning": "Continuer",
+    "xOfYLessons": "{completed} sur {total} leçons terminées",
+    "totalTimeSpent": "Temps total passé",
+    "certificateComingSoon": "La délivrance des certificats arrive bientôt",
+    "resumeFrom": "Reprendre à",
+    "emptyMyCourses": "Vous n'êtes inscrit à aucun cours pour le moment",
+    "browseCourses": "Voir les cours",
+    "loading": "Chargement",
+    "retry": "Réessayer",
+    "back": "Retour",
+    "progress": "Progression",
+    "errors": {
+      "notEnrolled": "Vous n'êtes pas inscrit à ce cours",
+      "courseNotFound": "Cours introuvable",
+      "lessonNotFound": "Leçon introuvable",
+      "progressFetchFailed": "Impossible de charger la progression"
+    }
   }
 }

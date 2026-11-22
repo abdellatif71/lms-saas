@@ -115,6 +115,40 @@ export async function getLessonProgress(ctx: AuthContext, lessonId: string) {
   };
 }
 
+export async function getResumePosition(ctx: AuthContext, courseSlug: string) {
+  if (ctx.role !== MemberRole.STUDENT) throw new ForbiddenError("Only students can resume a course");
+  const course = await prisma.course.findFirst({
+    where: {
+      organizationId: ctx.organizationId,
+      slug: courseSlug,
+      deletedAt: null,
+    },
+    include: {
+      modules: {
+        orderBy: { position: "asc" },
+        include: { lessons: { where: { deletedAt: null }, orderBy: { position: "asc" } } },
+      },
+    },
+  });
+  if (!course) throw new NotFoundError("Course not found or not enrolled");
+  const enrollment = await prisma.enrollment.findFirst({ where: { courseId: course.id, studentUserId: ctx.userId, organizationId: ctx.organizationId, status: "ACTIVE" } });
+  if (!enrollment) throw new ForbiddenError("Student is not enrolled in this course");
+
+  const lessons = course.modules.flatMap((module) => module.lessons.map((lesson) => ({ ...lesson, moduleId: module.id })));
+  if (lessons.length === 0) return { empty: true, completed: false, lessonId: null, moduleId: null, lastLessonId: null };
+
+  const progress = await prisma.lessonProgress.findMany({
+    where: { studentUserId: ctx.userId, lessonId: { in: lessons.map((lesson) => lesson.id) }, state: "COMPLETED" },
+    select: { lessonId: true },
+  });
+  const completedIds = new Set(progress.map((row) => row.lessonId));
+  const next = lessons.find((lesson) => !completedIds.has(lesson.id));
+  if (next) return { empty: false, completed: false, lessonId: next.id, moduleId: next.moduleId, lastLessonId: null };
+
+  const last = lessons.at(-1)!;
+  return { empty: false, completed: true, lessonId: null, moduleId: null, lastLessonId: last.id };
+}
+
 export async function getCourseProgress(ctx: AuthContext, courseSlug: string) {
   let course;
   if (ctx.role === MemberRole.STUDENT) {

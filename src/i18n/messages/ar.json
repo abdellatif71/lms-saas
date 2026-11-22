@@ -233,5 +233,37 @@
       "notStarted": "يلزم وجود نشاط تعليمي قبل الإكمال",
       "alreadyCompleted": "الدرس مكتمل بالفعل"
     }
+  },
+  "learn": {
+    "coursePlayer": "مشغّل الدورة",
+    "lessons": "الدروس",
+    "modules": "الوحدات",
+    "completed": "مكتمل",
+    "inProgress": "قيد التقدم",
+    "notStarted": "لم يبدأ",
+    "previous": "السابق",
+    "next": "التالي",
+    "markComplete": "وضع علامة مكتمل",
+    "completedToast": "تم إكمال الدرس",
+    "nextLesson": "الدرس التالي",
+    "courseCompleted": "تم إكمال الدورة",
+    "backToMyCourses": "العودة إلى دوراتي",
+    "continueLearning": "متابعة",
+    "xOfYLessons": "تم إكمال {completed} من أصل {total} درسًا",
+    "totalTimeSpent": "إجمالي الوقت المقضي",
+    "certificateComingSoon": "إصدار الشهادات قريبًا",
+    "resumeFrom": "الاستمرار من",
+    "emptyMyCourses": "أنت غير مسجل في أي دورة حتى الآن",
+    "browseCourses": "تصفح الدورات",
+    "loading": "جارٍ التحميل",
+    "retry": "إعادة المحاولة",
+    "back": "رجوع",
+    "progress": "التقدم",
+    "errors": {
+      "notEnrolled": "أنت غير مسجل في هذه الدورة",
+      "courseNotFound": "الدورة غير موجودة",
+      "lessonNotFound": "الدرس غير موجود",
+      "progressFetchFailed": "تعذر تحميل التقدم"
+    }
   }
 }
