@@ -6,6 +6,7 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const config: NextConfig = {
   typedRoutes: true,
   reactStrictMode: true,
+  serverExternalPackages: ["pino", "pino-pretty"],
 };
 
 export default withNextIntl(config);

@@ -13,6 +13,8 @@ const envSchema = z.object({
   S3_SECRET_KEY: z.string().default(''),
   STRIPE_SECRET_KEY: z.string().default(''),
   STRIPE_WEBHOOK_SECRET: z.string().default(''),
+  RESEND_API_KEY: z.string().optional(),
+  EMAIL_FROM: z.string().default('LMS SaaS <onboarding@resend.dev>'),
   AI_OPENAI_KEY: z.string().default(''),
   AI_GEMINI_KEY: z.string().default(''),
   AI_DEEPSEEK_KEY: z.string().default(''),
