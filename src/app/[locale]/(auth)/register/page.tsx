@@ -26,7 +26,7 @@ export default function RegisterPage() {
       setError(data?.error === "CONFLICT" ? t("errors.emailTaken") : data?.error === "RATE_LIMITED" ? t("errors.rateLimited") : t("errors.generic"));
       return;
     }
-    window.location.assign(`/${locale}/verify-email?pending=1`);
+    window.location.assign(`/${locale}/login`);
   }
 
   return (

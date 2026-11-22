@@ -6,7 +6,6 @@ import { ConflictError, NotFoundError, ValidationError } from "@/lib/errors";
 import { logger } from "@/lib/logger";
 import { audit } from "@/lib/audit";
 
-const EMAIL_VERIFY_TTL_HOURS = 24;
 const PASSWORD_RESET_TTL_HOURS = 1;
 
 export async function registerUser(input: {
@@ -20,24 +19,17 @@ export async function registerUser(input: {
 
   const passwordHash = await hashPassword(input.password);
   const user = await prisma.user.create({
-    data: { email, passwordHash, name: input.name.trim() },
-  });
-
-  const { token, hash } = generateToken();
-  const expiresAt = new Date(Date.now() + EMAIL_VERIFY_TTL_HOURS * 3600_000);
-  await prisma.verificationToken.create({
-    data: { userId: user.id, type: "EMAIL_VERIFY", tokenHash: hash, expiresAt },
-  });
-
-  await getEmailProvider().send({
-    to: email,
-    subject: "Verify your email",
-    text: `Your verification token: ${token}\n\nThis token expires in ${EMAIL_VERIFY_TTL_HOURS} hours.`,
+    data: {
+      email,
+      passwordHash,
+      name: input.name.trim(),
+      emailVerifiedAt: new Date(),
+    },
   });
 
   await audit({ actorId: user.id, action: "USER.REGISTERED", targetType: "User", targetId: user.id });
 
-  logger.info({ userId: user.id }, "User registered, verification email queued");
+  logger.info({ userId: user.id }, "User registered");
   return { userId: user.id };
 }
 
