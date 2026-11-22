@@ -1,7 +1,16 @@
 {
   "common": {
     "appName": "LMS SaaS",
-    "scaffoldingOk": "Scaffolding OK"
+    "scaffoldingOk": "Scaffolding OK",
+    "learningManagementSystem": "Learning Management System",
+    "heroDescription": "Courses, organizations, lessons and student learning — all in one secure platform.",
+    "lmsOverview": "LMS overview",
+    "courses": "Courses",
+    "learnAndTeach": "Learn & teach",
+    "teams": "Teams",
+    "organizations": "Organizations",
+    "progress": "Progress",
+    "trackLearning": "Track learning"
   },
   "auth": {
     "title": "Authentication",
@@ -20,7 +29,7 @@
     "checkEmail": "Check your email",
     "registrationPending": "Your account was created. Check your email for the verification token.",
     "errors": {
-      "invalidCredentials": "Invalid email or password, or email is not verified.",
+      "invalidCredentials": "Invalid email or password.",
       "emailTaken": "This email is already registered.",
       "tokenInvalid": "The token is invalid.",
       "tokenExpired": "The token has expired.",

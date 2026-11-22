@@ -18,6 +18,10 @@ async function getModule(ctx: AuthContext, courseSlug: string, moduleId: string)
 export async function createLesson(ctx: AuthContext, courseSlug: string, moduleId: string, input: z.infer<typeof lessonCreateSchema>) {
   assertTeacherOrAbove(ctx);
   const { module } = await getModule(ctx, courseSlug, moduleId);
+  if (input.fileId) {
+    const file = await prisma.file.findFirst({ where: { id: input.fileId, organizationId: ctx.organizationId } });
+    if (!file) throw new NotFoundError("File not found");
+  }
   const last = await prisma.lesson.findFirst({ where: { moduleId, deletedAt: null }, orderBy: { position: "desc" }, select: { position: true } });
   const lesson = await prisma.lesson.create({
     data: {
@@ -36,10 +40,10 @@ export async function createLesson(ctx: AuthContext, courseSlug: string, moduleI
   return lesson;
 }
 
-export async function listLessons(ctx: AuthContext, courseSlug: string, moduleId: string) {
+export async function listLessons(ctx: AuthContext, courseSlug: string, moduleId: string, includeDeleted = false) {
   assertTeacherOrAbove(ctx);
   await getModule(ctx, courseSlug, moduleId);
-  return prisma.lesson.findMany({ where: { moduleId, deletedAt: null }, orderBy: { position: "asc" } });
+  return prisma.lesson.findMany({ where: { moduleId, ...(includeDeleted ? {} : { deletedAt: null }) }, orderBy: { position: "asc" } });
 }
 
 export async function updateLesson(ctx: AuthContext, courseSlug: string, moduleId: string, lessonId: string, input: z.infer<typeof lessonUpdateSchema>) {
@@ -47,6 +51,10 @@ export async function updateLesson(ctx: AuthContext, courseSlug: string, moduleI
   const { course } = await getModule(ctx, courseSlug, moduleId);
   const lesson = await prisma.lesson.findFirst({ where: { id: lessonId, moduleId, deletedAt: null } });
   if (!lesson) throw new NotFoundError("Lesson not found");
+  if (input.fileId) {
+    const file = await prisma.file.findFirst({ where: { id: input.fileId, organizationId: ctx.organizationId } });
+    if (!file) throw new NotFoundError("File not found");
+  }
   const updated = await prisma.lesson.update({
     where: { id: lesson.id },
     data: {
@@ -91,7 +99,7 @@ export async function reorderLesson(ctx: AuthContext, courseSlug: string, module
     const ordered = [...siblings.slice(0, target), lesson, ...siblings.slice(target)];
     await Promise.all(ordered.map((item, index) => tx.lesson.update({ where: { id: item.id }, data: { position: index, ...(destinationModuleId !== moduleId ? { moduleId: destinationModuleId } : {}) } })));
   });
-  await audit({ actorId: ctx.userId, organizationId: ctx.organizationId, action: "LESSON.REORDERED", targetType: "Lesson", targetId: lessonId, metadata: { moduleId: destinationModuleId, position } });
+  await audit({ actorId: ctx.userId, organizationId: ctx.organizationId, action: destinationModuleId !== moduleId ? "LESSON.MOVED" : "LESSON.REORDERED", targetType: "Lesson", targetId: lessonId, metadata: { moduleId: destinationModuleId, position } });
   return prisma.lesson.findUniqueOrThrow({ where: { id: lessonId } });
 }
 

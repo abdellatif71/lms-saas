@@ -57,7 +57,7 @@ export async function deleteModule(ctx: AuthContext, courseSlug: string, moduleI
   const course = await getCourse(ctx, courseSlug);
   const moduleRecord = await prisma.module.findFirst({ where: { id: moduleId, courseId: course.id } });
   if (!moduleRecord) throw new NotFoundError("Module not found");
-  const lessonCount = await prisma.lesson.count({ where: { moduleId, deletedAt: null } });
+  const lessonCount = await prisma.lesson.count({ where: { moduleId } });
   if (lessonCount > 0) throw new ConflictError("Module has lessons; cannot delete");
   await prisma.$transaction(async (tx) => {
     await tx.module.delete({ where: { id: moduleId } });

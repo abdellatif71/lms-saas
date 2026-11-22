@@ -27,6 +27,19 @@ describe("module hierarchy", () => {
     expect(a.position).toBe(0); expect(b.position).toBe(1);
   });
 
+  it("TEACHER creates modules with positions 0, 1, 2", async () => {
+    const { ctx, course } = await setup("module-positions", "TEACHER");
+    const a = await createModule(ctx, course.slug, { title: "First" });
+    const b = await createModule(ctx, course.slug, { title: "Second" });
+    const c = await createModule(ctx, course.slug, { title: "Third" });
+    expect([a.position, b.position, c.position]).toEqual([0, 1, 2]);
+  });
+
+  it("TEACHER can create a module", async () => {
+    const { ctx, course } = await setup("module-teacher", "TEACHER");
+    await expect(createModule(ctx, course.slug, { title: "Teacher module" })).resolves.toMatchObject({ title: "Teacher module", position: 0 });
+  });
+
   it("reorder shifts siblings correctly", async () => {
     const { ctx, course } = await setup("module-reorder", "ORG_OWNER");
     const a = await createModule(ctx, course.slug, { title: "A" });

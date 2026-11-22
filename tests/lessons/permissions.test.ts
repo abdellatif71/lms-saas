@@ -1,7 +1,7 @@
 import { afterAll, describe, expect, it } from "vitest";
 import { prisma } from "@/lib/db/client";
-import { createModule, listModules, updateModule } from "@/modules/lessons/modules";
-import { createLesson } from "@/modules/lessons/service";
+import { createModule, listModules, updateModule, deleteModule } from "@/modules/lessons/modules";
+import { createLesson, updateLesson, softDeleteLesson } from "@/modules/lessons/service";
 
 const suffix = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 const orgIds: string[] = [];
@@ -21,6 +21,13 @@ describe("lesson permissions", () => {
     const ctx = { userId: student.id, organizationId: org.id, role: "STUDENT" as const };
     await expect(createModule(ctx, course.slug, { title: "Forbidden" })).rejects.toMatchObject({ code: "FORBIDDEN" });
     await expect(listModules(ctx, course.slug)).rejects.toMatchObject({ code: "FORBIDDEN" });
+    const module = await prisma.module.create({ data: { courseId: course.id, title: "Direct", position: 0 } });
+    const lesson = await prisma.lesson.create({ data: { moduleId: module.id, title: "Direct lesson", position: 0, contentType: "TEXT", bodyText: "Body" } });
+    await expect(updateModule(ctx, course.slug, module.id, { title: "Forbidden" })).rejects.toMatchObject({ code: "FORBIDDEN" });
+    await expect(deleteModule(ctx, course.slug, module.id)).rejects.toMatchObject({ code: "FORBIDDEN" });
+    await expect(createLesson(ctx, course.slug, module.id, { title: "Forbidden", contentType: "TEXT", bodyText: "Body", completionRule: "VIEW" })).rejects.toMatchObject({ code: "FORBIDDEN" });
+    await expect(updateLesson(ctx, course.slug, module.id, lesson.id, { title: "Forbidden" })).rejects.toMatchObject({ code: "FORBIDDEN" });
+    await expect(softDeleteLesson(ctx, course.slug, module.id, lesson.id)).rejects.toMatchObject({ code: "FORBIDDEN" });
   });
 
   it("TEACHER can manage content in own organization", async () => {

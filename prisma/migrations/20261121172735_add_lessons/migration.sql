@@ -56,6 +56,9 @@ CREATE INDEX "Lesson_moduleId_position_idx" ON "Lesson"("moduleId", "position");
 -- CreateIndex
 CREATE INDEX "Lesson_moduleId_deletedAt_idx" ON "Lesson"("moduleId", "deletedAt");
 
+-- CreateIndex
+CREATE INDEX "Lesson_fileId_idx" ON "Lesson"("fileId");
+
 -- AddForeignKey
 ALTER TABLE "Module" ADD CONSTRAINT "Module_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 

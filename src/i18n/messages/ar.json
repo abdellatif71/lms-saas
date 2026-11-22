@@ -1,7 +1,16 @@
 {
   "common": {
     "appName": "LMS SaaS",
-    "scaffoldingOk": "تم تجهيز الهيكل"
+    "scaffoldingOk": "تم تجهيز الهيكل",
+    "learningManagementSystem": "نظام إدارة التعلم",
+    "heroDescription": "الدورات والمؤسسات والدروس وتعلم الطلاب — كل ذلك في منصة آمنة واحدة.",
+    "lmsOverview": "نظرة عامة على LMS",
+    "courses": "الدورات",
+    "learnAndTeach": "تعلم وعلّم",
+    "teams": "الفرق",
+    "organizations": "المؤسسات",
+    "progress": "التقدم",
+    "trackLearning": "تتبع التعلم"
   },
   "auth": {
     "title": "المصادقة",
@@ -20,7 +29,7 @@
     "checkEmail": "تحقق من بريدك الإلكتروني",
     "registrationPending": "تم إنشاء حسابك. تحقق من بريدك الإلكتروني للحصول على رمز التحقق.",
     "errors": {
-      "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة، أو لم يتم تأكيد البريد.",
+      "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
       "emailTaken": "هذا البريد الإلكتروني مسجل بالفعل.",
       "tokenInvalid": "الرمز غير صالح.",
       "tokenExpired": "انتهت صلاحية الرمز.",

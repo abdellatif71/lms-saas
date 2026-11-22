@@ -292,6 +292,7 @@ model Lesson {
 
   @@index([moduleId, position])
   @@index([moduleId, deletedAt])
+  @@index([fileId])
 }
 
 model Enrollment {

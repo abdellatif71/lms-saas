@@ -1,7 +1,16 @@
 {
   "common": {
     "appName": "LMS SaaS",
-    "scaffoldingOk": "Échafaudage OK"
+    "scaffoldingOk": "Échafaudage OK",
+    "learningManagementSystem": "Système de gestion de l'apprentissage",
+    "heroDescription": "Cours, organisations, leçons et apprentissage des étudiants — le tout sur une plateforme sécurisée.",
+    "lmsOverview": "Vue générale LMS",
+    "courses": "Cours",
+    "learnAndTeach": "Apprendre et enseigner",
+    "teams": "Équipes",
+    "organizations": "Organisations",
+    "progress": "Progression",
+    "trackLearning": "Suivre l'apprentissage"
   },
   "auth": {
     "title": "Authentification",
@@ -20,7 +29,7 @@
     "checkEmail": "Consultez vos e-mails",
     "registrationPending": "Votre compte a été créé. Consultez vos e-mails pour obtenir le jeton de vérification.",
     "errors": {
-      "invalidCredentials": "E-mail ou mot de passe invalide, ou e-mail non vérifié.",
+      "invalidCredentials": "E-mail ou mot de passe invalide.",
       "emailTaken": "Cet e-mail est déjà enregistré.",
       "tokenInvalid": "Le jeton est invalide.",
       "tokenExpired": "Le jeton a expiré.",
