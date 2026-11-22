@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 
 import '../globals.css';
+import { LocaleSwitcher } from '@/components/locale-switcher';
 
 export function generateStaticParams() {
   return [{ locale: 'ar' }, { locale: 'fr' }, { locale: 'en' }];
@@ -32,7 +33,10 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body>
-        <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider messages={messages}>
+          <LocaleSwitcher />
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );
