@@ -85,6 +85,19 @@ enum LearningEventType {
   LESSON_PAUSED
 }
 
+enum QuestionType {
+  MCQ
+  TRUE_FALSE
+  SHORT_ANSWER
+  LONG_ANSWER
+}
+
+enum QuestionScope {
+  COURSE
+  MODULE
+  LESSON
+}
+
 model User {
   id              String     @id @default(uuid()) @db.Uuid
   email           String     @unique
@@ -108,6 +121,7 @@ model User {
   lessonProgress     LessonProgress[]   @relation("StudentLessonProgress")
   learningEvents     LearningEvent[]
   learningTimeBuckets LearningTimeBucket[]
+  authoredQuestions  Question[] @relation("QuestionAuthor")
   @@index([status])
 }
 
@@ -157,6 +171,7 @@ model Organization {
   categories  Category[]
   enrollments Enrollment[]
   lessonProgress LessonProgress[]
+  questions Question[]
   @@index([status])
 }
 
@@ -264,6 +279,7 @@ model Course {
   category     Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   modules      Module[]
   enrollments  Enrollment[]
+  questions Question[]
 }
 
 model Module {
@@ -276,6 +292,7 @@ model Module {
 
   course  Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   lessons Lesson[]
+  questions Question[]
 
   @@index([courseId, position])
 }
@@ -300,6 +317,7 @@ model Lesson {
   progress LessonProgress[]
   learningEvents LearningEvent[]
   learningTimeBuckets LearningTimeBucket[]
+  questions Question[]
 
   @@index([moduleId, position])
   @@index([moduleId, deletedAt])
@@ -377,4 +395,50 @@ model LearningEvent {
 
   @@index([userId, lessonId, createdAt])
   @@index([lessonId, type, createdAt])
+}
+
+model Question {
+  id             String        @id @default(uuid()) @db.Uuid
+  organizationId String        @db.Uuid
+  courseId       String        @db.Uuid
+  moduleId       String?       @db.Uuid
+  lessonId       String?       @db.Uuid
+  authorId       String        @db.Uuid
+  type           QuestionType
+  scope          QuestionScope @default(COURSE)
+  prompt         String        @db.Text
+  explanation    String?       @db.Text
+  points         Int           @default(1)
+  correctBoolean Boolean?
+  expectedAnswer String?       @db.Text
+  acceptedAnswers Json?
+  deletedAt      DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  course       Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  module       Module?      @relation(fields: [moduleId], references: [id], onDelete: SetNull)
+  lesson       Lesson?      @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+  author       User         @relation("QuestionAuthor", fields: [authorId], references: [id], onDelete: Restrict)
+  options      QuestionOption[]
+
+  @@index([organizationId, courseId])
+  @@index([courseId, deletedAt])
+  @@index([lessonId])
+  @@index([moduleId])
+}
+
+model QuestionOption {
+  id         String   @id @default(uuid()) @db.Uuid
+  questionId String   @db.Uuid
+  label      String   @db.Text
+  isCorrect  Boolean  @default(false)
+  position   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId, position])
 }

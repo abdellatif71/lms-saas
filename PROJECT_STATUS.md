@@ -61,6 +61,13 @@ Last updated: Phase 0 — initial.
   from events, lesson viewer heartbeat hook + progress indicators,
   anti-cheat (no completion without prior activity), cross-org isolation
   tests. Completion tracking real (not 'opened page').
+- T4.1 — Schema extension (Question, QuestionOption, QuestionType,
+  QuestionScope), migration add_questions, Question CRUD (teacher-only),
+  4 question types (MCQ, TRUE_FALSE, SHORT_ANSWER, LONG_ANSWER), DTO
+  split (toTeacherDTO includes answers, toStudentDTO strips them),
+  answer-leak tests, teacher question UI (3 pages, ar/fr/en, RTL),
+  cross-org isolation tests. No student-facing question API yet (comes
+  in T4.2 with quiz assembly).
 
 ## In progress
 - None.
@@ -84,17 +91,13 @@ Last updated: Phase 0 — initial.
 - D009 Learning time from heartbeats only, aggregated to daily
   LearningTimeBucket. No wall-clock estimation. Anti-cheat: completion
   requires prior STARTED/HEARTBEAT event.
-- T3.1 — Learning experience UI refinement: CoursePlayer layout
-  (module/lesson tree, progress badges, active highlight, mobile drawer),
-  resume-position endpoint (first incomplete lesson by module/lesson position),
-  lesson viewer refactor with prev/next navigation, my-courses refinement
-  (progress bar, continue button, time spent, empty/loading/error states),
-  course completion page (100% check, certificate placeholder). No schema
-  change, no new migration. i18n ar/fr/en, RTL.
 - D010 Resume position = first incomplete lesson by (module.position,
   lesson.position). Course completion page redirects to resume if < 100%.
+- D011 Question answers stored server-side only. toStudentDTO strips
+  isCorrect, correctBoolean, expectedAnswer, acceptedAnswers, explanation.
+  Any student-facing API MUST use toStudentDTO. Enforced by answer-leak tests.
 
 ## Next implementation task
-T4.1 — Assessment foundation (Question, QuestionBank, Quiz models;
-question types: MCQ, true/false, short answer; teacher UI to create
-questions per lesson). Per master roadmap Phase 4.
+T4.2 — Quiz model + assembly (Quiz, QuizQuestion, QuizAttempt
+scaffolding; teacher assembles questions into a quiz; student sees
+toStudentDTO only). Per master roadmap Phase 4.

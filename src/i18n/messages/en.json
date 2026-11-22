@@ -253,5 +253,44 @@
       "lessonNotFound": "Lesson not found",
       "progressFetchFailed": "Could not load learning progress"
     }
+  },
+  "question": {
+    "questions": "Questions",
+    "newQuestion": "New question",
+    "editQuestion": "Edit question",
+    "type": "Type",
+    "typeMcq": "Multiple choice",
+    "typeTrueFalse": "True / False",
+    "typeShortAnswer": "Short answer",
+    "typeLongAnswer": "Long answer",
+    "prompt": "Prompt",
+    "explanation": "Explanation",
+    "points": "Points",
+    "options": "Options",
+    "addOption": "Add option",
+    "removeOption": "Remove option",
+    "correctOption": "Correct option",
+    "correctAnswer": "Correct answer",
+    "trueLabel": "True",
+    "falseLabel": "False",
+    "expectedAnswer": "Expected answer",
+    "acceptedAnswers": "Accepted alternatives",
+    "addAcceptedAnswer": "Add accepted answer",
+    "noQuestions": "No questions yet",
+    "filterAll": "All",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this question?",
+    "back": "Back",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "manageQuestions": "Manage questions",
+    "errors": {
+      "notFound": "Question not found",
+      "notAllowed": "You are not allowed to manage questions",
+      "mcqNeedsOneCorrect": "MCQ must have exactly one correct option",
+      "mcqNeedsTwoOptions": "MCQ needs at least two options",
+      "invalidType": "Invalid question data"
+    }
   }
 }

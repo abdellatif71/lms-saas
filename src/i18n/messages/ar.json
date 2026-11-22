@@ -265,5 +265,44 @@
       "lessonNotFound": "الدرس غير موجود",
       "progressFetchFailed": "تعذر تحميل التقدم"
     }
+  },
+  "question": {
+    "questions": "الأسئلة",
+    "newQuestion": "سؤال جديد",
+    "editQuestion": "تعديل السؤال",
+    "type": "النوع",
+    "typeMcq": "اختيار من متعدد",
+    "typeTrueFalse": "صحيح / خطأ",
+    "typeShortAnswer": "إجابة قصيرة",
+    "typeLongAnswer": "إجابة مطولة",
+    "prompt": "نص السؤال",
+    "explanation": "شرح",
+    "points": "النقاط",
+    "options": "الخيارات",
+    "addOption": "إضافة خيار",
+    "removeOption": "إزالة خيار",
+    "correctOption": "الخيار الصحيح",
+    "correctAnswer": "الإجابة الصحيحة",
+    "trueLabel": "صحيح",
+    "falseLabel": "خطأ",
+    "expectedAnswer": "الإجابة المتوقعة",
+    "acceptedAnswers": "الإجابات البديلة المقبولة",
+    "addAcceptedAnswer": "إضافة إجابة مقبولة",
+    "noQuestions": "لا توجد أسئلة",
+    "filterAll": "الكل",
+    "delete": "حذف",
+    "deleteConfirm": "هل تريد حذف هذا السؤال؟",
+    "back": "رجوع",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "cancel": "إلغاء",
+    "manageQuestions": "إدارة الأسئلة",
+    "errors": {
+      "notFound": "السؤال غير موجود",
+      "notAllowed": "غير مسموح لك بإدارة الأسئلة",
+      "mcqNeedsOneCorrect": "يجب أن يكون لسؤال الاختيار المتعدد إجابة صحيحة واحدة بالضبط",
+      "mcqNeedsTwoOptions": "يجب أن يحتوي سؤال الاختيار المتعدد على خيارين على الأقل",
+      "invalidType": "بيانات السؤال غير صالحة"
+    }
   }
 }

@@ -265,5 +265,44 @@
       "lessonNotFound": "Leçon introuvable",
       "progressFetchFailed": "Impossible de charger la progression"
     }
+  },
+  "question": {
+    "questions": "Questions",
+    "newQuestion": "Nouvelle question",
+    "editQuestion": "Modifier la question",
+    "type": "Type",
+    "typeMcq": "Choix multiples",
+    "typeTrueFalse": "Vrai / Faux",
+    "typeShortAnswer": "Réponse courte",
+    "typeLongAnswer": "Réponse longue",
+    "prompt": "Énoncé",
+    "explanation": "Explication",
+    "points": "Points",
+    "options": "Options",
+    "addOption": "Ajouter une option",
+    "removeOption": "Retirer une option",
+    "correctOption": "Bonne option",
+    "correctAnswer": "Bonne réponse",
+    "trueLabel": "Vrai",
+    "falseLabel": "Faux",
+    "expectedAnswer": "Réponse attendue",
+    "acceptedAnswers": "Réponses alternatives acceptées",
+    "addAcceptedAnswer": "Ajouter une réponse acceptée",
+    "noQuestions": "Aucune question",
+    "filterAll": "Toutes",
+    "delete": "Supprimer",
+    "deleteConfirm": "Supprimer cette question ?",
+    "back": "Retour",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "cancel": "Annuler",
+    "manageQuestions": "Gérer les questions",
+    "errors": {
+      "notFound": "Question introuvable",
+      "notAllowed": "Vous n'avez pas le droit de gérer les questions",
+      "mcqNeedsOneCorrect": "Le QCM doit avoir exactement une bonne réponse",
+      "mcqNeedsTwoOptions": "Le QCM doit avoir au moins deux options",
+      "invalidType": "Données de question invalides"
+    }
   }
 }

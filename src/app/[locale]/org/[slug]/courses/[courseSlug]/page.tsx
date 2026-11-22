@@ -12,6 +12,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ l
   const course = await getCourseBySlug(ctx, courseSlug);
   const t = await getTranslations({ locale, namespace: "course" });
   const lessonT = await getTranslations({ locale, namespace: "lesson" });
+  const questionT = await getTranslations({ locale, namespace: "question" });
   const admin = ctx.role === "ORG_OWNER" || ctx.role === "ORG_ADMIN";
 
   return (
@@ -30,6 +31,12 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ l
               href={`/${locale}/org/${slug}/courses/${courseSlug}/modules`}
             >
               {lessonT("manageContent")}
+            </a>
+            <a
+              className="rounded border px-2 py-1"
+              href={`/${locale}/org/${slug}/courses/${courseSlug}/questions`}
+            >
+              {questionT("manageQuestions")}
             </a>
             <a
               className="rounded border px-2 py-1"
