@@ -214,5 +214,24 @@
       "notPublished": "الدورة غير منشورة",
       "cannotLeave": "لا يمكن مغادرة دورة يوجد بها تقدم"
     }
+  },
+  "learning": {
+    "timeSpent": "الوقت المقضي",
+    "markComplete": "وضع علامة مكتمل",
+    "completed": "مكتمل",
+    "progress": "التقدم",
+    "courseProgress": "تقدم الدورة",
+    "lessonProgress": "تقدم الدرس",
+    "noProgressYet": "لا يوجد تقدم بعد",
+    "heartbeatActive": "المتابعة نشطة",
+    "heartbeatPaused": "المتابعة متوقفة",
+    "completeSuccess": "تم إكمال الدرس",
+    "completeError": "تعذر إكمال الدرس",
+    "errors": {
+      "notEnrolled": "أنت غير مسجل في هذه الدورة",
+      "lessonDeleted": "الدرس لم يعد متاحًا",
+      "notStarted": "يلزم وجود نشاط تعليمي قبل الإكمال",
+      "alreadyCompleted": "الدرس مكتمل بالفعل"
+    }
   }
 }

@@ -9,6 +9,7 @@ export default async function LearnCoursePage({ params }: { params: Promise<{ lo
   await requireSessionOrRedirect(locale);
   const ctx = await requireOrgContext(slug);
   const t = await getTranslations({ locale, namespace: "enrollment" });
+  const learning = await getTranslations({ locale, namespace: "learning" });
   const course = await getEnrolledCourseContent(ctx, courseSlug);
   const lessons = course.modules.flatMap((module) => module.lessons);
 
@@ -20,7 +21,7 @@ export default async function LearnCoursePage({ params }: { params: Promise<{ lo
       {course.modules.length === 0 ? (
         <p className="text-slate-600">{t("courseContent")}</p>
       ) : (
-        <LessonViewer slug={slug} lessons={lessons} markCompleteLabel={t("markComplete")} />
+        <LessonViewer slug={slug} courseSlug={courseSlug} lessons={lessons} markCompleteLabel={learning("markComplete")} timeSpentLabel={learning("timeSpent")} completedLabel={learning("completed")} />
       )}
     </main>
   );

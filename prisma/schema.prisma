@@ -78,6 +78,13 @@ enum LessonProgressState {
   COMPLETED
 }
 
+enum LearningEventType {
+  LESSON_STARTED
+  LESSON_HEARTBEAT
+  LESSON_COMPLETED
+  LESSON_PAUSED
+}
+
 model User {
   id              String     @id @default(uuid()) @db.Uuid
   email           String     @unique
@@ -99,6 +106,8 @@ model User {
   authoredCourses    Course[]           @relation("CourseAuthor")
   enrollments        Enrollment[]       @relation("StudentEnrollments")
   lessonProgress     LessonProgress[]   @relation("StudentLessonProgress")
+  learningEvents     LearningEvent[]
+  learningTimeBuckets LearningTimeBucket[]
   @@index([status])
 }
 
@@ -289,10 +298,11 @@ model Lesson {
   module Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   file   File?  @relation(fields: [fileId], references: [id], onDelete: SetNull)
   progress LessonProgress[]
+  learningEvents LearningEvent[]
+  learningTimeBuckets LearningTimeBucket[]
 
   @@index([moduleId, position])
   @@index([moduleId, deletedAt])
-  @@index([fileId])
 }
 
 model Enrollment {
@@ -333,4 +343,38 @@ model LessonProgress {
   @@unique([lessonId, studentUserId])
   @@index([organizationId, studentUserId])
   @@index([studentUserId, state])
+}
+
+model LearningTimeBucket {
+  id         String   @id @default(uuid()) @db.Uuid
+  userId     String   @db.Uuid
+  lessonId   String   @db.Uuid
+  bucketDate DateTime @db.Date
+  totalMs    Int      @default(0)
+  eventCount Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId, bucketDate])
+  @@index([userId, bucketDate])
+  @@index([lessonId, bucketDate])
+}
+
+model LearningEvent {
+  id         String            @id @default(uuid()) @db.Uuid
+  userId     String            @db.Uuid
+  lessonId   String            @db.Uuid
+  type       LearningEventType
+  durationMs Int?
+  metadata   Json?
+  createdAt  DateTime          @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@index([userId, lessonId, createdAt])
+  @@index([lessonId, type, createdAt])
 }

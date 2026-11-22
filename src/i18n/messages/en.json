@@ -202,5 +202,24 @@
       "notPublished": "Course is not published",
       "cannotLeave": "Cannot leave a course with existing progress"
     }
+  },
+  "learning": {
+    "timeSpent": "Time spent",
+    "markComplete": "Mark complete",
+    "completed": "Completed",
+    "progress": "Progress",
+    "courseProgress": "Course progress",
+    "lessonProgress": "Lesson progress",
+    "noProgressYet": "No progress yet",
+    "heartbeatActive": "Heartbeat active",
+    "heartbeatPaused": "Heartbeat paused",
+    "completeSuccess": "Lesson completed",
+    "completeError": "Could not complete lesson",
+    "errors": {
+      "notEnrolled": "You are not enrolled in this course",
+      "lessonDeleted": "Lesson is no longer available",
+      "notStarted": "Learning activity is required before completion",
+      "alreadyCompleted": "Lesson is already completed"
+    }
   }
 }

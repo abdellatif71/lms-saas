@@ -55,6 +55,12 @@ Last updated: Phase 0 — initial.
   add_enrollment, enrollment service (STUDENT, OPEN-only, idempotent,
   progress-blocked unenroll), student views (my-courses, available, learn),
   5 API routes, cross-org isolation tests. Completion tracking deferred to T2.5.
+- T2.5 — Schema extension (LearningEvent, LearningTimeBucket,
+  LearningEventType), migration add_learning_events, heartbeat ingestion
+  (30s anti-spam), daily bucket aggregation, real lesson/course progress
+  from events, lesson viewer heartbeat hook + progress indicators,
+  anti-cheat (no completion without prior activity), cross-org isolation
+  tests. Completion tracking real (not 'opened page').
 
 ## In progress
 - None.
@@ -75,7 +81,10 @@ Last updated: Phase 0 — initial.
 - D006 Billing = Stripe behind PaymentProvider interface; webhook-only activation.
 - D007 Learning time from heartbeats only; aggregated to daily buckets.
 - D008 Modular monolith; API routes contain no business logic.
+- D009 Learning time from heartbeats only, aggregated to daily
+  LearningTimeBucket. No wall-clock estimation. Anti-cheat: completion
+  requires prior STARTED/HEARTBEAT event.
 
 ## Next implementation task
-T2.5 — Lesson completion tracking (LearningEvent heartbeats,
-LearningTimeBucket aggregation, real progress indicators).
+T3.1 — Learning experience UI refinement (resume position,
+lesson navigation, course player polish), before Phase 4 assessment work.

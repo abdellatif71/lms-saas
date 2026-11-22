@@ -214,5 +214,24 @@
       "notPublished": "Le cours n'est pas publié",
       "cannotLeave": "Impossible de quitter un cours avec une progression"
     }
+  },
+  "learning": {
+    "timeSpent": "Temps passé",
+    "markComplete": "Marquer comme terminé",
+    "completed": "Terminé",
+    "progress": "Progression",
+    "courseProgress": "Progression du cours",
+    "lessonProgress": "Progression de la leçon",
+    "noProgressYet": "Aucune progression",
+    "heartbeatActive": "Suivi actif",
+    "heartbeatPaused": "Suivi en pause",
+    "completeSuccess": "Leçon terminée",
+    "completeError": "Impossible de terminer la leçon",
+    "errors": {
+      "notEnrolled": "Vous n'êtes pas inscrit à ce cours",
+      "lessonDeleted": "La leçon n'est plus disponible",
+      "notStarted": "Une activité d'apprentissage est requise avant de terminer",
+      "alreadyCompleted": "La leçon est déjà terminée"
+    }
   }
 }
