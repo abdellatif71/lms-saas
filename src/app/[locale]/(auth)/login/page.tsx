@@ -20,11 +20,11 @@ export default function LoginPage() {
       email: String(form.get("email")),
       password: String(form.get("password")),
       redirect: false,
-      callbackUrl: `/${locale}`,
+      callbackUrl: `/${locale}/dashboard`,
     });
     setPending(false);
     if (result?.error) setError(t("errors.invalidCredentials"));
-    else if (result?.ok) window.location.assign(`/${locale}`);
+    else if (result?.ok) window.location.assign(`/${locale}/dashboard`);
   }
 
   return (

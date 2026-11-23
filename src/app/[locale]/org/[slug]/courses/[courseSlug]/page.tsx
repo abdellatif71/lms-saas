@@ -11,14 +11,13 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ l
   const ctx = await requireOrgContext(slug);
   const course = await getCourseBySlug(ctx, courseSlug);
   const t = await getTranslations({ locale, namespace: "course" });
-  const lessonT = await getTranslations({ locale, namespace: "lesson" });
-  const questionT = await getTranslations({ locale, namespace: "question" });
+  const nav = await getTranslations({ locale, namespace: "navigation" });
   const admin = ctx.role === "ORG_OWNER" || ctx.role === "ORG_ADMIN";
 
   return (
     <main dir={locale === "ar" ? "rtl" : "ltr"} className="mx-auto max-w-3xl p-6">
       <a className="text-sm underline" href={`/${locale}/org/${slug}/courses`}>
-        {t("back")}
+        {nav("backToCourses")}
       </a>
       <h1 className="mt-4 text-2xl font-semibold">{course.title}</h1>
       <p className="mt-2 text-slate-600">{course.description ?? "—"}</p>
@@ -30,13 +29,19 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ l
               className="rounded border px-2 py-1"
               href={`/${locale}/org/${slug}/courses/${courseSlug}/modules`}
             >
-              {lessonT("manageContent")}
+              {nav("modules")}
             </a>
             <a
               className="rounded border px-2 py-1"
               href={`/${locale}/org/${slug}/courses/${courseSlug}/questions`}
             >
-              {questionT("manageQuestions")}
+              {nav("questions")}
+            </a>
+            <a
+              className="rounded border px-2 py-1"
+              href={`/${locale}/org/${slug}/courses/${courseSlug}/quizzes`}
+            >
+              {nav("quizzes")}
             </a>
             <a
               className="rounded border px-2 py-1"

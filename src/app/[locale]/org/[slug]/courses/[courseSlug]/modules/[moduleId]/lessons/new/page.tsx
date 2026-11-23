@@ -7,6 +7,7 @@ import FileUploader from "@/components/file-uploader";
 
 export default function NewLessonPage() {
   const t = useTranslations("lesson");
+  const nav = useTranslations("navigation");
   const locale = useLocale();
   const params = useParams();
   const slug = String(params.slug), courseSlug = String(params.courseSlug), moduleId = String(params.moduleId);
@@ -26,6 +27,7 @@ export default function NewLessonPage() {
 
   return (
     <main dir={dir} className="mx-auto max-w-xl p-6">
+      <a className="text-sm underline" href={`/${locale}/org/${slug}/courses/${courseSlug}/modules/${moduleId}`}>{nav("backToModules")}</a>
       <h1 className="text-2xl font-semibold">{t("newLesson")}</h1>
       <form className="mt-6 space-y-4" onSubmit={submit}>
         <label className="block">{t("title")}<input name="title" required minLength={2} maxLength={160} className="mt-1 w-full rounded border px-3 py-2" /></label>

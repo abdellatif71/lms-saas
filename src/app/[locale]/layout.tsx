@@ -31,8 +31,8 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
-      <body>
+    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <LocaleSwitcher />
           {children}

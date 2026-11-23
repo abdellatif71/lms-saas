@@ -4,12 +4,19 @@ import { FormEvent, useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 
+type LessonOption = { id: string; title: string };
+type ModuleOption = { id: string; title: string; lessons: LessonOption[] };
+
 export default function NewQuestionPage() {
   const t = useTranslations("question");
   const locale = useLocale();
   const params = useParams();
   const slug = String(params.slug), courseSlug = String(params.courseSlug);
   const [type, setType] = useState("MCQ");
+  const [scope, setScope] = useState("COURSE");
+  const [modules, setModules] = useState<ModuleOption[]>([]);
+  const [moduleId, setModuleId] = useState("");
+  const [lessonId, setLessonId] = useState("");
   const [courseId, setCourseId] = useState("");
   const [options, setOptions] = useState([{ label: "", isCorrect: true, position: 0 }, { label: "", isCorrect: false, position: 1 }]);
   const [accepted, setAccepted] = useState([""]);
@@ -19,12 +26,40 @@ export default function NewQuestionPage() {
   useEffect(() => {
     fetch(`/api/organizations/${encodeURIComponent(slug)}/courses/${encodeURIComponent(courseSlug)}`)
       .then((r) => r.ok ? r.json() : null).then((course) => setCourseId(course?.id ?? ""));
+    fetch(`/api/organizations/${encodeURIComponent(slug)}/courses/${encodeURIComponent(courseSlug)}/modules`)
+      .then((r) => r.ok ? r.json() : []).then((items) => setModules(Array.isArray(items) ? items : []));
   }, [slug, courseSlug]);
 
+  const lessons = moduleId
+    ? (modules.find((item) => item.id === moduleId)?.lessons ?? [])
+    : modules.flatMap((item) => item.lessons);
+
+  function selectLesson(value: string) {
+    setLessonId(value);
+    const owner = modules.find((item) => item.lessons.some((lesson) => lesson.id === value));
+    setModuleId(owner?.id ?? "");
+  }
+
   async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault(); setPending(true); setError("");
+    event.preventDefault();
+    setError("");
+    if (scope === "MODULE" && !moduleId) {
+      setError("Please select a module");
+      return;
+    }
+    if (scope === "LESSON" && !lessonId) {
+      setError("Please select a lesson");
+      return;
+    }
+
+    setPending(true);
     const form = new FormData(event.currentTarget);
-    const body: Record<string, unknown> = { type, courseId, scope: form.get("scope"), prompt: form.get("prompt"), explanation: form.get("explanation") || undefined, points: Number(form.get("points") || 1) };
+    const body: Record<string, unknown> = { type, courseId, scope, prompt: form.get("prompt"), explanation: form.get("explanation") || undefined, points: Number(form.get("points") || 1) };
+    if (scope === "MODULE" && moduleId) body.moduleId = moduleId;
+    if (scope === "LESSON") {
+      body.lessonId = lessonId;
+      if (moduleId) body.moduleId = moduleId;
+    }
     if (type === "MCQ") body.options = options;
     if (type === "TRUE_FALSE") body.correctBoolean = form.get("correctBoolean") === "true";
     if (type === "SHORT_ANSWER") { body.expectedAnswer = form.get("expectedAnswer"); body.acceptedAnswers = accepted.filter((value) => value.trim()); }
@@ -41,7 +76,16 @@ export default function NewQuestionPage() {
       <h1 className="text-2xl font-semibold">{t("newQuestion")}</h1>
       <form onSubmit={submit} className="mt-6 space-y-4">
         <label className="block">{t("type")}<select value={type} onChange={(e) => setType(e.target.value)} className="mt-1 w-full rounded border px-3 py-2"><option value="MCQ">{t("typeMcq")}</option><option value="TRUE_FALSE">{t("typeTrueFalse")}</option><option value="SHORT_ANSWER">{t("typeShortAnswer")}</option><option value="LONG_ANSWER">{t("typeLongAnswer")}</option></select></label>
-        <label className="block">Scope<select name="scope" defaultValue="COURSE" className="mt-1 w-full rounded border px-3 py-2"><option value="COURSE">Course</option><option value="MODULE">Module</option><option value="LESSON">Lesson</option></select></label>
+        <label className="block">Scope<select name="scope" value={scope} onChange={(e) => { setScope(e.target.value); setError(""); }} className="mt-1 w-full rounded border px-3 py-2"><option value="COURSE">Course</option><option value="MODULE">Module</option><option value="LESSON">Lesson</option></select></label>
+        {scope === "MODULE" && (
+          <label className="block">Module<select required value={moduleId} onChange={(e) => setModuleId(e.target.value)} className="mt-1 w-full rounded border px-3 py-2"><option value="">Select a module</option>{modules.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}</select></label>
+        )}
+        {scope === "LESSON" && (
+          <>
+            <label className="block">Module (optional)<select value={moduleId} onChange={(e) => { setModuleId(e.target.value); setLessonId(""); }} className="mt-1 w-full rounded border px-3 py-2"><option value="">All modules</option>{modules.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}</select></label>
+            <label className="block">Lesson<select required value={lessonId} onChange={(e) => selectLesson(e.target.value)} className="mt-1 w-full rounded border px-3 py-2"><option value="">Select a lesson</option>{lessons.map((item) => <option key={item.id} value={item.id}>{item.title}</option>)}</select></label>
+          </>
+        )}
         <label className="block">{t("prompt")}<textarea name="prompt" required minLength={3} maxLength={10000} className="mt-1 w-full rounded border px-3 py-2" /></label>
         <label className="block">{t("explanation")}<textarea name="explanation" maxLength={10000} className="mt-1 w-full rounded border px-3 py-2" /></label>
         <label className="block">{t("points")}<input name="points" type="number" min="1" max="100" defaultValue="1" className="mt-1 w-full rounded border px-3 py-2" /></label>

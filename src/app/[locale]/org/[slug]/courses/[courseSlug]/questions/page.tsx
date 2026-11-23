@@ -9,11 +9,16 @@ export default async function QuestionsPage({ params }: { params: Promise<{ loca
   await requireSessionOrRedirect(locale);
   const ctx = await requireOrgContext(slug);
   const t = await getTranslations({ locale, namespace: "question" });
+  const nav = await getTranslations({ locale, namespace: "navigation" });
   try { assertTeacherOrAbove(ctx); } catch { return <main dir={locale === "ar" ? "rtl" : "ltr"} className="p-6 text-red-700">{t("errors.notAllowed")}</main>; }
 
   const questions = await listQuestions(ctx, courseSlug);
   return (
     <main dir={locale === "ar" ? "rtl" : "ltr"} className="mx-auto max-w-5xl p-6">
+      <div className="flex flex-wrap gap-2">
+        <a className="rounded border px-3 py-2" href={`/${locale}/org/${slug}/courses/${courseSlug}`}>{nav("backToCourse")}</a>
+        <a className="rounded border px-3 py-2" href={`/${locale}/org/${slug}/courses/${courseSlug}/modules`}>{nav("modules")}</a>
+      </div>
       <div className="flex items-center justify-between gap-3">
         <h1 className="text-2xl font-semibold">{t("questions")}</h1>
         <a className="rounded bg-slate-900 px-3 py-2 text-sm text-white" href={`/${locale}/org/${slug}/courses/${courseSlug}/questions/new`}>{t("newQuestion")}</a>

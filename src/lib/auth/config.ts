@@ -45,11 +45,27 @@ export const authConfig: NextAuthConfig = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.userId = user.id;
+      if (user?.id) {
+        token.userId = user.id;
+        const dbUser = await prisma.user.findUnique({
+          where: { id: user.id },
+          select: { isSuperAdmin: true },
+        });
+        const membership = await prisma.membership.findFirst({
+          where: { userId: user.id, status: "ACTIVE" },
+          select: { role: true },
+        });
+        token.isSuperAdmin = dbUser?.isSuperAdmin ?? false;
+        token.role = membership?.role ?? null;
+      }
       return token;
     },
     async session({ session, token }) {
-      if (session.user) session.user.id = token.userId as string;
+      if (session.user) {
+        session.user.id = token.userId as string;
+        session.user.isSuperAdmin = token.isSuperAdmin as boolean;
+        session.user.role = (token.role as string | null) ?? null;
+      }
       return session;
     },
   },
