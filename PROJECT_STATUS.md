@@ -68,6 +68,12 @@ Last updated: Phase 0 — initial.
   answer-leak tests, teacher question UI (3 pages, ar/fr/en, RTL),
   cross-org isolation tests. No student-facing question API yet (comes
   in T4.2 with quiz assembly).
+- T4.2 — Schema extension (Quiz, QuizQuestion, QuizAttempt, QuizStatus),
+  migration add_quizzes, quiz CRUD and question assembly, status workflow,
+  teacher-only mutations and student published-quiz read API, answer-safe
+  DTO split, 5 API routes, teacher UI (list/create/detail/edit/assemble)
+  and read-only student view, ar/fr/en i18n with RTL, cross-org isolation,
+  answer-leak, assembly, status, and permission tests.
 
 ## In progress
 - None.
@@ -96,8 +102,9 @@ Last updated: Phase 0 — initial.
 - D011 Question answers stored server-side only. toStudentDTO strips
   isCorrect, correctBoolean, expectedAnswer, acceptedAnswers, explanation.
   Any student-facing API MUST use toStudentDTO. Enforced by answer-leak tests.
+- D012 Server-graded quiz attempts: MCQ and TRUE_FALSE auto-graded, SHORT_ANSWER
+  exact-match grading, LONG_ANSWER manual grading, submitted answers stored in
+  QuizAttempt.answers JSON and never returned before submission.
 
 ## Next implementation task
-T4.2 — Quiz model + assembly (Quiz, QuizQuestion, QuizAttempt
-scaffolding; teacher assembles questions into a quiz; student sees
-toStudentDTO only). Per master roadmap Phase 4.
+T4.3 — Quiz attempt + submission + auto-grading.

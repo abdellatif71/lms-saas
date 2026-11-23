@@ -1,0 +1,19 @@
+import { afterAll, describe, expect, it } from "vitest";
+import { prisma } from "@/lib/db/client";
+import { assertOrgAdmin, assertTeacherOrAbove } from "@/modules/auth/permissions";
+import { createQuestion } from "@/modules/questions/service";
+import { assembleQuestions, createQuiz, getQuizStudent, getQuizTeacher, softDeleteQuiz, updateQuiz } from "@/modules/quizzes/service";
+
+const suffix = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+const orgIds: string[] = []; const userIds: string[] = [];
+async function setup(label: string, role: "STUDENT" | "TEACHER" | "ORG_ADMIN" | "ORG_OWNER") { const user = await prisma.user.create({ data: { email: `${label}-${suffix}@example.test`, passwordHash: "test", name: label } }); const org = await prisma.organization.create({ data: { name: label, slug: `${label}-${suffix}`, memberships: { create: { userId: user.id, role, status: "ACTIVE", joinedAt: new Date() } } } }); const course = await prisma.course.create({ data: { organizationId: org.id, authorId: user.id, title: "Permission Course", slug: `${label}-course-${suffix}` } }); orgIds.push(org.id); userIds.push(user.id); return { ctx: { userId: user.id, organizationId: org.id, role } as const, course }; }
+afterAll(async () => { await prisma.organization.deleteMany({ where: { id: { in: orgIds } } }); await prisma.user.deleteMany({ where: { id: { in: userIds } } }); });
+
+describe("quiz permissions", () => {
+  it("STUDENT cannot create or list", async () => { const s = await setup("perm-student-list", "STUDENT"); await expect(createQuiz(s.ctx, s.course.slug, { title: "Forbidden", passingScore: 60, maxAttempts: 1, shuffleQuestions: false, shuffleOptions: false })).rejects.toMatchObject({ code: "FORBIDDEN" }); });
+  it("STUDENT cannot update, assemble, or delete", async () => { const teacher = await setup("perm-teacher", "TEACHER"); const quiz = await createQuiz(teacher.ctx, teacher.course.slug, { title: "Protected", passingScore: 60, maxAttempts: 1, shuffleQuestions: false, shuffleOptions: false }); const student = await setup("perm-student-mut", "STUDENT"); await expect(updateQuiz(student.ctx, quiz.id, { title: "Changed" })).rejects.toMatchObject({ code: "FORBIDDEN" }); await expect(assembleQuestions(student.ctx, quiz.id, { questions: [] })).rejects.toMatchObject({ code: "FORBIDDEN" }); await expect(softDeleteQuiz(student.ctx, quiz.id)).rejects.toMatchObject({ code: "FORBIDDEN" }); });
+  it("STUDENT cannot get DRAFT quiz", async () => { const s = await setup("perm-student-draft", "STUDENT"); await prisma.enrollment.create({ data: { courseId: s.course.id, studentUserId: s.ctx.userId, organizationId: s.ctx.organizationId, status: "ACTIVE" } }); const teacher = await setup("perm-draft-teacher", "TEACHER"); const quiz = await createQuiz(teacher.ctx, teacher.course.slug, { title: "Draft hidden", passingScore: 60, maxAttempts: 1, shuffleQuestions: false, shuffleOptions: false }); await expect(getQuizStudent(s.ctx, quiz.id)).rejects.toMatchObject({ code: "NOT_FOUND" }); });
+  it("TEACHER cannot publish", async () => { const s = await setup("perm-teacher-publish", "TEACHER"); expect(() => assertOrgAdmin(s.ctx)).toThrow(); expect(() => assertTeacherOrAbove(s.ctx)).not.toThrow(); });
+  it("ORG_ADMIN can publish guard", async () => { const s = await setup("perm-admin-publish", "ORG_ADMIN"); expect(() => assertOrgAdmin(s.ctx)).not.toThrow(); });
+  it("cross-org teacher cannot get quiz", async () => { const a = await setup("perm-cross-a", "TEACHER"); const b = await setup("perm-cross-b", "TEACHER"); const quiz = await createQuiz(b.ctx, b.course.slug, { title: "Cross teacher", passingScore: 60, maxAttempts: 1, shuffleQuestions: false, shuffleOptions: false }); await expect(getQuizTeacher(a.ctx, quiz.id)).rejects.toMatchObject({ code: "NOT_FOUND" }); });
+});

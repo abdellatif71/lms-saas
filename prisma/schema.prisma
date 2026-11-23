@@ -98,6 +98,12 @@ enum QuestionScope {
   LESSON
 }
 
+enum QuizStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
 model User {
   id              String     @id @default(uuid()) @db.Uuid
   email           String     @unique
@@ -122,6 +128,8 @@ model User {
   learningEvents     LearningEvent[]
   learningTimeBuckets LearningTimeBucket[]
   authoredQuestions  Question[] @relation("QuestionAuthor")
+  authoredQuizzes    Quiz[]     @relation("QuizAuthor")
+  quizAttempts       QuizAttempt[] @relation("QuizAttemptStudent")
   @@index([status])
 }
 
@@ -172,6 +180,8 @@ model Organization {
   enrollments Enrollment[]
   lessonProgress LessonProgress[]
   questions Question[]
+  quizzes Quiz[]
+  quizAttempts QuizAttempt[]
   @@index([status])
 }
 
@@ -280,6 +290,7 @@ model Course {
   modules      Module[]
   enrollments  Enrollment[]
   questions Question[]
+  quizzes Quiz[]
 }
 
 model Module {
@@ -422,6 +433,7 @@ model Question {
   lesson       Lesson?      @relation(fields: [lessonId], references: [id], onDelete: SetNull)
   author       User         @relation("QuestionAuthor", fields: [authorId], references: [id], onDelete: Restrict)
   options      QuestionOption[]
+  quizQuestions QuizQuestion[]
 
   @@index([organizationId, courseId])
   @@index([courseId, deletedAt])
@@ -441,4 +453,68 @@ model QuestionOption {
   question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
   @@index([questionId, position])
+}
+
+model Quiz {
+  id             String     @id @default(uuid()) @db.Uuid
+  organizationId String     @db.Uuid
+  courseId       String     @db.Uuid
+  authorId       String     @db.Uuid
+  title          String
+  description    String?    @db.Text
+  status         QuizStatus @default(DRAFT)
+  timeLimitMin   Int?
+  passingScore   Int        @default(60)
+  maxAttempts    Int        @default(1)
+  shuffleQuestions Boolean  @default(false)
+  shuffleOptions   Boolean  @default(false)
+  publishedAt    DateTime?
+  deletedAt      DateTime?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  organization Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  author       User           @relation("QuizAuthor", fields: [authorId], references: [id], onDelete: Restrict)
+  questions    QuizQuestion[]
+  attempts     QuizAttempt[]
+
+  @@index([organizationId, courseId])
+  @@index([courseId, status, deletedAt])
+}
+
+model QuizQuestion {
+  id         String   @id @default(uuid()) @db.Uuid
+  quizId     String   @db.Uuid
+  questionId String   @db.Uuid
+  position   Int
+  points     Int
+  createdAt  DateTime @default(now())
+
+  quiz     Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  question Question @relation(fields: [questionId], references: [id], onDelete: Restrict)
+
+  @@unique([quizId, questionId])
+  @@index([quizId, position])
+}
+
+model QuizAttempt {
+  id             String    @id @default(uuid()) @db.Uuid
+  quizId         String    @db.Uuid
+  studentId      String    @db.Uuid
+  organizationId String    @db.Uuid
+  startedAt      DateTime  @default(now())
+  submittedAt    DateTime?
+  score          Int?
+  passed         Boolean?
+  answers        Json?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  quiz         Quiz         @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  student      User         @relation("QuizAttemptStudent", fields: [studentId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([quizId, studentId])
+  @@index([studentId, createdAt])
 }
